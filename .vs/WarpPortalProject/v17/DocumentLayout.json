@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Develop\\GitCode\\Moon\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|d:\\develop\\gitcode\\moon\\warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|solutionrelative:warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81A20D53-FD07-40B0-AF32-3B0AB3CD227B}|Core.Services\\Core.Services.csproj|d:\\develop\\gitcode\\moon\\core.services\\toolsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81A20D53-FD07-40B0-AF32-3B0AB3CD227B}|Core.Services\\Core.Services.csproj|solutionrelative:core.services\\toolsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransController.cs",
+              "DocumentMoniker": "D:\\Develop\\GitCode\\Moon\\WarpPortalAPI\\Controllers\\TransController.cs",
+              "RelativeDocumentMoniker": "WarpPortalAPI\\Controllers\\TransController.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\Moon\\WarpPortalAPI\\Controllers\\TransController.cs*",
+              "RelativeToolTip": "WarpPortalAPI\\Controllers\\TransController.cs*",
+              "ViewState": "AQIAAHoAAAAAAAAAAAAiwIwAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-17T19:39:57.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ToolsService.cs",
+              "DocumentMoniker": "D:\\Develop\\GitCode\\Moon\\Core.Services\\ToolsService.cs",
+              "RelativeDocumentMoniker": "Core.Services\\ToolsService.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\Moon\\Core.Services\\ToolsService.cs*",
+              "RelativeToolTip": "Core.Services\\ToolsService.cs*",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAiwHoAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-17T19:39:42.459Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

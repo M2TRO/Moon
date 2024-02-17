@@ -1,0 +1,216 @@
+﻿using Core.Domain.Database;
+using Core.Interfaces;
+using Core.Models;
+using Core.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using WarpPortalAPI.Service;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace WarpPortalAPI.Controllers
+{
+    [Route("api/[controller]/[Action]")]
+    [ApiController]
+    public class TransController : ControllerBase
+    {
+        private IDatabeseService _databeseService;
+
+        public IJwtUtils _jwtUtils;
+        private IToolsxService _toolsService { get; set; }
+
+        public TransController(IDatabeseService databeseService, IJwtUtils jwtUtils, IToolsxService toolsService)
+        {
+            _databeseService = databeseService;
+            _jwtUtils = jwtUtils;
+            _toolsService = toolsService;
+        }
+
+
+        [Authz]
+        [HttpPost]
+        public ActionResult Verifyslip(IFormCollection data)
+        {
+            SingleFileModel singleFileModel = new SingleFileModel();
+            if (data.Files.Count > 0)
+            {
+                singleFileModel.File = data.Files[0];
+
+
+                if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["UserId"]))
+                {
+
+                    singleFileModel.Amt = data["Amount"];
+                    singleFileModel.UserName = data["UserId"];
+                    singleFileModel.File = singleFileModel.File;
+
+                    try
+                    {
+                        ResultUpload mdlDataRes = _toolsService.Upload(singleFileModel);
+                        if (mdlDataRes.IsSuccess)
+                        {
+                            LogSlip logSlip = new LogSlip();
+                            logSlip.Ref = mdlDataRes.Ref;
+                            logSlip.Datetime = mdlDataRes.Datetime;
+                            logSlip.Amt = mdlDataRes.Amt;
+                            logSlip.Bank = mdlDataRes.BankName;
+                            logSlip.Message = mdlDataRes.Message;
+                            logSlip.IsSuccess = mdlDataRes.IsSuccess;
+                            //         var res = _dbLogService.SaveLogSlip(logSlip);
+                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDB");
+
+                            //create folder if not exist
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+
+                            //get file extension
+                            FileInfo fileInfo = new FileInfo(singleFileModel.File.FileName);
+                            string fileNameext = fileInfo.Extension;
+
+                            string fileNameWithPath = Path.Combine(path, logSlip.Ref + fileNameext);
+                            byte[] dataArray = new byte[100000];
+                            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                            {
+                                singleFileModel.File.CopyTo(stream);
+                            }
+
+                            ResVerSlip resVerSlip = new ResVerSlip();
+                            resVerSlip.Amt = mdlDataRes.Amt;
+                            resVerSlip.Datetime = mdlDataRes.Datetime;
+                            resVerSlip.Bank = mdlDataRes.BankName;
+                            resVerSlip.CreatedTime = DateTime.Now;
+                            resVerSlip.IsSuccess = true;
+                            resVerSlip.Message = "Verify Is OK!";
+                            return Ok(resVerSlip);
+                        }
+                        else
+                        {
+                            LogSlip logSlip = new LogSlip();
+                            mdlDataRes.Ref = Guid.NewGuid().ToString();
+
+                            logSlip.Ref = mdlDataRes.Ref;
+                            logSlip.Datetime = mdlDataRes.Datetime;
+                            logSlip.Amt = mdlDataRes.Amt;
+                            logSlip.Bank = mdlDataRes.BankName;
+                            logSlip.Message = mdlDataRes.Message;
+                            logSlip.IsSuccess = mdlDataRes.IsSuccess;
+                            //     var res = _dbLogService.SaveLogSlip(logSlip);
+                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDBError");
+
+                            //create folder if not exist
+                            if (!Directory.Exists(path))
+                                Directory.CreateDirectory(path);
+
+                            //get file extension
+                            FileInfo fileInfo = new FileInfo(singleFileModel.File.FileName);
+                            string fileNameext = fileInfo.Extension;
+
+                            string fileNameWithPath = Path.Combine(path, logSlip.Ref + fileNameext);
+                            byte[] dataArray = new byte[100000];
+                            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                            {
+                                singleFileModel.File.CopyTo(stream);
+                            }
+
+
+                            return BadRequest(mdlDataRes);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ResVerSlip resVerSlip = new ResVerSlip();
+                        resVerSlip.CreatedTime = DateTime.Now;
+                        resVerSlip.IsSuccess = false;
+                        resVerSlip.Message = ex.Message;//"Verify Error!.OCR catch";
+                        return BadRequest(resVerSlip);
+                    }
+
+                }
+                else
+                {
+                    ResVerSlip resVerSlip = new ResVerSlip();
+                    resVerSlip.CreatedTime = DateTime.Now;
+                    resVerSlip.IsSuccess = false;
+                    resVerSlip.Message = "Verify Error!.Check Input Key.";
+                    return BadRequest(resVerSlip);
+                }
+
+
+
+            }
+            else
+            {
+                ResVerSlip resVerSlip = new ResVerSlip();
+                resVerSlip.CreatedTime = DateTime.Now;
+                resVerSlip.IsSuccess = false;
+                resVerSlip.Message = "Verify Error!!";
+                return BadRequest(resVerSlip);
+            }
+
+
+            return Ok();
+        }
+
+        [Authz]
+        [HttpPost]
+        public ActionResult Transaction(intrans model)
+        {
+            HttpContext context = HttpContext;
+            var user = (TblAccount)context.Items["User"];
+
+
+            return Ok();
+        }
+
+
+        [Authz]
+        [HttpPost(Name = "PayQRCode")]
+        public IActionResult GenerateQRCode(MdlPayInput mdlPayInput)
+        {
+
+            List<string> randomAcc = new List<string>();
+
+            HttpContext context = HttpContext;
+            var user = (TblAccount)context.Items["User"];
+            if (user != null)
+            {
+                var payid = _databeseService.GetTransBankbyId(user.Id);
+                payid.ForEach(m => {
+            
+                randomAcc.Add(m.PId);
+                });
+            }
+
+            Random randNum = new Random();
+            int aRandomPos = randNum.Next(randomAcc.Count);
+
+
+            UriBuilder _url = new UriBuilder();
+            _url.Scheme = "https";
+            _url.Host = "promptpay.io";
+            _url.Path = "/" + randomAcc[aRandomPos] + "/" + mdlPayInput.Amount;
+            string urlquery = _url.Uri.AbsoluteUri;
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(urlquery);
+
+
+            req.Headers.Add("Content-Transfer-Encoding", "8bit");
+            req.ContentType = "application/json";
+            req.KeepAlive = true;
+            req.Method = "GET";
+            req.Timeout = Timeout.Infinite;
+
+
+
+            var response = req.GetResponse();
+
+
+            FileStreamResult fileStreamResult = File(response.GetResponseStream(), response.ContentType);
+            byte[] data = StreamExtensions.ReadAllBytes(fileStreamResult.FileStream);
+
+
+
+            return File(data, "image/jpeg");
+
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "B1Nw1BNWrwAn70TSsTQhwXcw93JJQW9TC0/ODVoAR2A=",
+  "Source": "WarpPortalAPI",
+  "BasePath": "_content/WarpPortalAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

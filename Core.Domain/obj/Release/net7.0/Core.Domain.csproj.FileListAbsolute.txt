@@ -1,0 +1,14 @@
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\bin\Release\net7.0\Core.Domain.deps.json
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\bin\Release\net7.0\Core.Domain.runtimeconfig.json
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\bin\Release\net7.0\Core.Domain.dll
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\bin\Release\net7.0\Core.Domain.pdb
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.csproj.AssemblyReference.cache
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.AssemblyInfoInputs.cache
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.AssemblyInfo.cs
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.csproj.CoreCompileInputs.cache
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.dll
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\refint\Core.Domain.dll
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.pdb
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\Core.Domain.genruntimeconfig.cache
+D:\Develop\CodeGit\PortalAPI\WerpPortalApi\WarpPortalProject\Core.Domain\obj\Release\net7.0\ref\Core.Domain.dll

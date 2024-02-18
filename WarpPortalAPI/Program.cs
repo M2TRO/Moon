@@ -19,8 +19,8 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 builder.Services.AddDbContextPool<RpaControlDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionBase")));
 builder.Services.AddScoped<IDatabeseService, DatabeseService>();
-builder.Services.AddScoped<IJwtUtils, JwtUtils>();
-
+builder.Services.AddScoped<IToolsxService, ToolsxService>();
+builder.Services.AddScoped<IJwtUtils, JwtUtils>(); 
 
 var app = builder.Build();
 

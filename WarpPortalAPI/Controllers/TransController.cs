@@ -4,6 +4,7 @@ using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net;
 using WarpPortalAPI.Service;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -26,11 +27,22 @@ namespace WarpPortalAPI.Controllers
             _toolsService = toolsService;
         }
 
+        [HttpPost]
+        [Authz]
+        public ActionResult GenerateToken()
+        {
+
+            return Ok();
+        }
+
+
+
 
         [Authz]
         [HttpPost]
         public ActionResult Verifyslip(IFormCollection data)
         {
+            HttpContext context = HttpContext;
             SingleFileModel singleFileModel = new SingleFileModel();
             if (data.Files.Count > 0)
             {
@@ -43,7 +55,8 @@ namespace WarpPortalAPI.Controllers
                     singleFileModel.Amt = data["Amount"];
                     singleFileModel.UserName = data["UserId"];
                     singleFileModel.File = singleFileModel.File;
-
+                    LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel),Addr = context.Connection.RemoteIpAddress.ToString() };
+                    _databeseService.AddlogEventSync(logEvent);
                     try
                     {
                         ResultUpload mdlDataRes = _toolsService.Upload(singleFileModel);
@@ -81,6 +94,8 @@ namespace WarpPortalAPI.Controllers
                             resVerSlip.CreatedTime = DateTime.Now;
                             resVerSlip.IsSuccess = true;
                             resVerSlip.Message = "Verify Is OK!";
+                            logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(resVerSlip) };
+                            _databeseService.AddlogEventSync(logEvent);
                             return Ok(resVerSlip);
                         }
                         else
@@ -96,6 +111,9 @@ namespace WarpPortalAPI.Controllers
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
                             //     var res = _dbLogService.SaveLogSlip(logSlip);
                             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDBError");
+
+                            logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(logSlip) };
+                            _databeseService.AddlogEventSync(logEvent);
 
                             //create folder if not exist
                             if (!Directory.Exists(path))
@@ -167,14 +185,17 @@ namespace WarpPortalAPI.Controllers
         [HttpPost(Name = "PayQRCode")]
         public IActionResult GenerateQRCode(MdlPayInput mdlPayInput)
         {
-
+            HttpContext context = HttpContext;
+            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "GenerateQRCode", Detail = JsonConvert.SerializeObject(mdlPayInput),Addr = context.Connection.RemoteIpAddress.ToString() };
+            _databeseService.AddlogEventSync(logEvent);
             List<string> randomAcc = new List<string>();
 
-            HttpContext context = HttpContext;
+          
+      
             var user = (TblAccount)context.Items["User"];
             if (user != null)
             {
-                var payid = _databeseService.GetTransBankbyId(user.Id);
+                var payid = _databeseService.GetTransBankbyId(user.AccRef);
                 payid.ForEach(m =>
                 {
 
@@ -200,7 +221,8 @@ namespace WarpPortalAPI.Controllers
             req.Method = "GET";
             req.Timeout = Timeout.Infinite;
 
-
+            // logEvent = new LogEvent() { Code = "10", Remark = "ResGenerateQRCode", Detail = JsonConvert.SerializeObject(req) };
+            //_databeseService.AddlogEventSync(logEvent);
 
             var response = req.GetResponse();
 

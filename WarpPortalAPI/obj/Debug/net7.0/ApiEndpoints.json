@@ -79,6 +79,16 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "GenerateToken",
+    "RelativePath": "api/Trans/GenerateToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "Transaction",
     "RelativePath": "api/Trans/Transaction",
     "HttpMethod": "POST",

@@ -15,7 +15,7 @@ namespace Core.Interfaces
         Task<int> AddAccount(TblAccount tblAccount);
         Task<int> UpdateAccount(TblAccount tblAccount);
 
-        Task<IEnumerable<Application>> GetApplication(int AccId);
+        Task<IEnumerable<Application>> GetApplication(string AccRef);
         Task<int> AddApplication(Application application);
         Task<int> UpdateApplication(Application application);
 
@@ -26,6 +26,6 @@ namespace Core.Interfaces
 
         Task<int> AddlogEvent(LogEvent logEvent);
         int AddlogEventSync(LogEvent logEvent);
-        List<TransBank> GetTransBankbyId(int AccId);
+        List<TransBank> GetTransBankbyId(string AccRef);
     }
 }

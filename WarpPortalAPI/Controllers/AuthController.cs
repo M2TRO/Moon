@@ -113,6 +113,7 @@ namespace WarpPortalAPI.Controllers
 
                 if (state != null)
                 {
+                
                     response.tblAccount = state;
                     string tokenkey = _jwtUtils.GenerateToken(response.tblAccount);
                     response.Token = tokenkey;
@@ -121,6 +122,7 @@ namespace WarpPortalAPI.Controllers
 
                     logEvent = new LogEvent() { Code = "10", Remark = "ResLogin", Detail = JsonConvert.SerializeObject(response) };
                     _databeseService.AddlogEventSync(logEvent);
+         
                     return Ok(response);
                 }
                 else
@@ -201,7 +203,7 @@ namespace WarpPortalAPI.Controllers
             ResCustInfo resAccount = new ResCustInfo();
             resAccount.tblAccount = user;
 
-            var App =   _databeseService.GetApplication(user.Id);
+            var App =   _databeseService.GetApplication(user.AccRef);
             resAccount.application = App.Result.ToList();
             var list = _databeseService.GetScheduler(user.Id);
             resAccount.tblSchedulers = list.Result.ToList();

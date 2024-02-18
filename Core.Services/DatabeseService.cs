@@ -45,9 +45,9 @@ namespace Core.Services
         }
 
 
-        public async Task<IEnumerable<Application>> GetApplication(int AccId)
+        public async Task<IEnumerable<Application>> GetApplication(string AccRef)
         {
-            return await _rpaControlDBContext.Applications.Where(m=>m.AccId == AccId).ToListAsync();
+            return await _rpaControlDBContext.Applications.Where(m=>m.AccRef == AccRef).ToListAsync();
         }
 
         public async Task<int> AddApplication(Application application)
@@ -83,9 +83,9 @@ namespace Core.Services
         {
             return  _rpaControlDBContext.LogEvents.Add(logEvent).Context.SaveChanges();
         }
-        public List<TransBank> GetTransBankbyId(int AccId)
+        public List<TransBank> GetTransBankbyId(string AccRef)
         {
-            return _rpaControlDBContext.TransBanks.Where(m => m.AccId == AccId).ToList();
+            return _rpaControlDBContext.TransBanks.Where(m => m.AccRef == AccRef).ToList();
         }
     }
 

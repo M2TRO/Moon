@@ -76,3 +76,4 @@ D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Release\net7.0\refint\WarpPortalAPI
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Release\net7.0\WarpPortalAPI.pdb
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Release\net7.0\WarpPortalAPI.genruntimeconfig.cache
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Release\net7.0\ref\WarpPortalAPI.dll
+D:\Develop\GitCode\MoonDev\WarpPortalAPI\bin\Release\net7.0\WarpPortalAPI.staticwebassets.runtime.json

@@ -45,3 +45,15 @@ D:\Develop\GitCode\Moon\Core.Common\obj\Debug\net7.0\Core.Common.dll
 D:\Develop\GitCode\Moon\Core.Common\obj\Debug\net7.0\refint\Core.Common.dll
 D:\Develop\GitCode\Moon\Core.Common\obj\Debug\net7.0\Core.Common.pdb
 D:\Develop\GitCode\Moon\Core.Common\obj\Debug\net7.0\ref\Core.Common.dll
+D:\Develop\GitCode\MoonDev\Core.Common\bin\Debug\net7.0\Core.Common.deps.json
+D:\Develop\GitCode\MoonDev\Core.Common\bin\Debug\net7.0\Core.Common.dll
+D:\Develop\GitCode\MoonDev\Core.Common\bin\Debug\net7.0\Core.Common.pdb
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.AssemblyInfoInputs.cache
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.AssemblyInfo.cs
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.csproj.CoreCompileInputs.cache
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.sourcelink.json
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.dll
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\refint\Core.Common.dll
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\Core.Common.pdb
+D:\Develop\GitCode\MoonDev\Core.Common\obj\Debug\net7.0\ref\Core.Common.dll

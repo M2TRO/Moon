@@ -7,7 +7,9 @@ namespace Core.Domain.Database
 {
     public partial class RpaControlDBContext : DbContext
     {
-     
+        public RpaControlDBContext()
+        {
+        }
 
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
@@ -26,14 +28,12 @@ namespace Core.Domain.Database
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=RpaControlDB;Trusted_Connection=True;User ID=sa;Password=Admin1234!");
+                optionsBuilder.UseSqlServer("Server=192.168.1.14;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("Thai_CI_AI");
-
             modelBuilder.Entity<Application>(entity =>
             {
                 entity.HasNoKey();
@@ -42,8 +42,7 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("(getdate())");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
@@ -60,71 +59,85 @@ namespace Core.Domain.Database
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<LogEvent>(entity =>
             {
+                entity.HasNoKey();
+
+                entity.ToTable("LogEvent");
+
                 entity.Property(e => e.Code)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Detail)
-                    .HasMaxLength(500)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Remark)
-                    .HasMaxLength(500)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<LogSlip>(entity =>
             {
-                entity.Property(e => e.Amt)
-                    .HasMaxLength(150)
-                    .IsFixedLength();
+                entity.HasNoKey();
+
+                entity.ToTable("LogSlip");
+
+                entity.Property(e => e.Amt).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.Bank)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Datetime)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Message)
-                    .HasMaxLength(200)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Ref)
                     .HasMaxLength(50)
-                    .IsFixedLength();
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TblAccount>(entity =>
             {
-                entity.HasKey(e => new { e.AccName, e.AccEmail });
+                entity.HasNoKey();
 
-                entity.ToTable("tblAccount");
-
-                entity.Property(e => e.AccName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.ToTable("TblAccount");
 
                 entity.Property(e => e.AccEmail)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.AccName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.AccPwd)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AccRef)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -138,16 +151,14 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.ModifyTime)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.ModifyTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TblScheduler>(entity =>
             {
-                entity.ToTable("tblScheduler");
+                entity.HasNoKey();
+
+                entity.ToTable("TblScheduler");
 
                 entity.Property(e => e.ActionTime).HasColumnType("datetime");
 
@@ -163,19 +174,17 @@ namespace Core.Domain.Database
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.ModifyBy)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ModifyTime)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.ModifyTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefNo)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.State).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.TitelName)
                     .HasMaxLength(50)
@@ -186,16 +195,22 @@ namespace Core.Domain.Database
             {
                 entity.HasNoKey();
 
-                entity.ToTable("Trans_Bank");
+                entity.ToTable("TransBank");
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.PId)
-                    .HasMaxLength(20)
-                    .HasColumnName("pID")
-                    .IsFixedLength();
+                entity.Property(e => e.PromNo)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("token");
             });
 
             OnModelCreatingPartial(modelBuilder);

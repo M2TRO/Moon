@@ -52,7 +52,7 @@ namespace WarpPortalAPI.Controllers
                             LogSlip logSlip = new LogSlip();
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
-                            logSlip.Amt = mdlDataRes.Amt;
+                            logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
@@ -90,7 +90,7 @@ namespace WarpPortalAPI.Controllers
 
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
-                            logSlip.Amt = mdlDataRes.Amt;
+                            logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
@@ -175,9 +175,10 @@ namespace WarpPortalAPI.Controllers
             if (user != null)
             {
                 var payid = _databeseService.GetTransBankbyId(user.Id);
-                payid.ForEach(m => {
-            
-                randomAcc.Add(m.PId);
+                payid.ForEach(m =>
+                {
+
+                    randomAcc.Add(m.PromNo);
                 });
             }
 

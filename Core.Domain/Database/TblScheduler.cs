@@ -14,7 +14,7 @@ namespace Core.Domain.Database
         public DateTime? ActionTime { get; set; }
         public bool? State { get; set; }
         public string? ModifyBy { get; set; }
-        public string? ModifyTime { get; set; }
+        public DateTime? ModifyTime { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedTime { get; set; }
     }

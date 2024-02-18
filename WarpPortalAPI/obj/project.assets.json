@@ -2693,11 +2693,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Develop\\GitCode\\Moon\\WarpPortalAPI\\WarpPortalAPI.csproj",
+      "projectUniqueName": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\WarpPortalAPI.csproj",
       "projectName": "WarpPortalAPI",
-      "projectPath": "D:\\Develop\\GitCode\\Moon\\WarpPortalAPI\\WarpPortalAPI.csproj",
+      "projectPath": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\WarpPortalAPI.csproj",
       "packagesPath": "C:\\Users\\M2\\.nuget\\packages\\",
-      "outputPath": "D:\\Develop\\GitCode\\Moon\\WarpPortalAPI\\obj\\",
+      "outputPath": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2719,20 +2719,20 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj": {
-              "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj"
+            "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj": {
+              "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj"
             },
-            "D:\\Develop\\GitCode\\Moon\\Core.Domain\\Core.Domain.csproj": {
-              "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Domain\\Core.Domain.csproj"
+            "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Core.Domain.csproj": {
+              "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Core.Domain.csproj"
             },
-            "D:\\Develop\\GitCode\\Moon\\Core.Interfaces\\Core.Interfaces.csproj": {
-              "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Interfaces\\Core.Interfaces.csproj"
+            "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\Core.Interfaces.csproj": {
+              "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\Core.Interfaces.csproj"
             },
-            "D:\\Develop\\GitCode\\Moon\\Core.Models\\Core.Models.csproj": {
-              "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Models\\Core.Models.csproj"
+            "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\Core.Models.csproj": {
+              "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\Core.Models.csproj"
             },
-            "D:\\Develop\\GitCode\\Moon\\Core.Services\\Core.Services.csproj": {
-              "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Services\\Core.Services.csproj"
+            "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\Core.Services.csproj": {
+              "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\Core.Services.csproj"
             }
           }
         }

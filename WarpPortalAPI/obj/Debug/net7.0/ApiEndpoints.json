@@ -102,9 +102,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "model",
-        "Type": "Core.Models.SingleFileModel",
-        "IsRequired": true
+        "Name": "data",
+        "Type": "Microsoft.AspNetCore.Http.IFormCollection",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

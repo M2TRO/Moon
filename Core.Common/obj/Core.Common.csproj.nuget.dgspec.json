@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj": {}
+    "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj": {}
   },
   "projects": {
-    "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj": {
+    "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj",
+        "projectUniqueName": "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj",
         "projectName": "Core.Common",
-        "projectPath": "D:\\Develop\\GitCode\\Moon\\Core.Common\\Core.Common.csproj",
+        "projectPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\Core.Common.csproj",
         "packagesPath": "C:\\Users\\M2\\.nuget\\packages\\",
-        "outputPath": "D:\\Develop\\GitCode\\Moon\\Core.Common\\obj\\",
+        "outputPath": "D:\\Develop\\GitCode\\MoonDev\\Core.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

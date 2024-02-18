@@ -1,5 +1,5 @@
-.vs
-Core.Common\bin\
-Core.Common\obj\
+*.vs
+bin
 obj
-.suo
+packages
+*.suo

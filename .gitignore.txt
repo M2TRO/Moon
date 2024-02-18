@@ -1,1 +1,1 @@
-.vs\WarpPortalProject
+.vs\WarpPortalProject\FileContentIndex

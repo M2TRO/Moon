@@ -1,4 +1,5 @@
 .vs
-bin
+Core.Common\bin\
+Core.Common\obj\
 obj
 .suo

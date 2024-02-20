@@ -8,7 +8,6 @@ namespace Core.Domain.Database
     public partial class RpaControlDBContext : DbContext
     {
        
-
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
         {

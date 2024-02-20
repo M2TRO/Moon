@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Develop\\GitCode\\MoonDev\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|d:\\develop\\gitcode\\moondev\\core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|d:\\develop\\gitcode\\moondev\\warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|solutionrelative:warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{9D72C80A-A943-4616-82BD-EB545CE39B1E}|Core.Models\\Core.Models.csproj|solutionrelative:core.models\\mdlaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|d:\\develop\\gitcode\\moondev\\core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|d:\\develop\\gitcode\\moondev\\core.domain\\database\\transbank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\transbank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -78,63 +78,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IJwtUtils.cs",
-              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\IJwtUtils.cs",
-              "RelativeDocumentMoniker": "Core.Interfaces\\IJwtUtils.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\IJwtUtils.cs",
-              "RelativeToolTip": "Core.Interfaces\\IJwtUtils.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-20T15:05:38.895Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "WarpPortalAPI\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "WarpPortalAPI\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAJQAAAAAAAAAAAAjwKcAAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-18T02:52:31.124Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "TransController.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\TransController.cs",
               "RelativeDocumentMoniker": "WarpPortalAPI\\Controllers\\TransController.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\TransController.cs*",
-              "RelativeToolTip": "WarpPortalAPI\\Controllers\\TransController.cs*",
-              "ViewState": "AQIAAG4AAAAAAAAAAAAUwEwAAAA8AAAA",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\TransController.cs",
+              "RelativeToolTip": "WarpPortalAPI\\Controllers\\TransController.cs",
+              "ViewState": "AQIAAG4AAAAAAAAAAAAUwH0AAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-17T19:39:57.491Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DatabeseService.cs",
-              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\DatabeseService.cs",
-              "RelativeDocumentMoniker": "Core.Services\\DatabeseService.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\DatabeseService.cs",
-              "RelativeToolTip": "Core.Services\\DatabeseService.cs",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAYwFIAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-18T05:59:09.51Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "JwtUtils.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\JwtUtils.cs",
               "RelativeDocumentMoniker": "Core.Services\\JwtUtils.cs",
@@ -147,12 +108,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MdlPay.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\MdlPay.cs",
               "RelativeDocumentMoniker": "Core.Models\\MdlPay.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\MdlPay.cs*",
-              "RelativeToolTip": "Core.Models\\MdlPay.cs*",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\MdlPay.cs",
+              "RelativeToolTip": "Core.Models\\MdlPay.cs",
               "ViewState": "AQIAACgAAAAAAAAAAAAYwDwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-18T08:50:40.911Z",
@@ -160,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ToolsxService.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\ToolsxService.cs",
               "RelativeDocumentMoniker": "Core.Services\\ToolsxService.cs",
@@ -173,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "IDatabeseService.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\IDatabeseService.cs",
               "RelativeDocumentMoniker": "Core.Interfaces\\IDatabeseService.cs",
@@ -186,12 +147,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AuthorizeAttribute.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\AuthorizeAttribute.cs",
               "RelativeDocumentMoniker": "WarpPortalAPI\\Service\\AuthorizeAttribute.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\AuthorizeAttribute.cs*",
-              "RelativeToolTip": "WarpPortalAPI\\Service\\AuthorizeAttribute.cs*",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\AuthorizeAttribute.cs",
+              "RelativeToolTip": "WarpPortalAPI\\Service\\AuthorizeAttribute.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-18T09:04:15.283Z",
@@ -199,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "MdlAccount.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Models\\MdlAccount.cs",
               "RelativeDocumentMoniker": "Core.Models\\MdlAccount.cs",
@@ -212,12 +173,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "JwtMiddleware.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\JwtMiddleware.cs",
               "RelativeDocumentMoniker": "WarpPortalAPI\\Service\\JwtMiddleware.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\JwtMiddleware.cs*",
-              "RelativeToolTip": "WarpPortalAPI\\Service\\JwtMiddleware.cs*",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Service\\JwtMiddleware.cs",
+              "RelativeToolTip": "WarpPortalAPI\\Service\\JwtMiddleware.cs",
               "ViewState": "AQIAACQAAAAAAAAAAAArwDAAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-20T14:26:13.632Z",
@@ -225,15 +186,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 0,
               "Title": "RpaControlDBContext.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs",
               "RelativeDocumentMoniker": "Core.Domain\\Database\\RpaControlDBContext.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs",
-              "RelativeToolTip": "Core.Domain\\Database\\RpaControlDBContext.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs*",
+              "RelativeToolTip": "Core.Domain\\Database\\RpaControlDBContext.cs*",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAAkAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-18T04:12:28.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DatabeseService.cs",
+              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\DatabeseService.cs",
+              "RelativeDocumentMoniker": "Core.Services\\DatabeseService.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\DatabeseService.cs",
+              "RelativeToolTip": "Core.Services\\DatabeseService.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAYwFIAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-18T05:59:09.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WarpPortalAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WarpPortalAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAAJQAAAAAAAAAAAAjwKcAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-18T02:52:31.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IJwtUtils.cs",
+              "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\IJwtUtils.cs",
+              "RelativeDocumentMoniker": "Core.Interfaces\\IJwtUtils.cs",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Interfaces\\IJwtUtils.cs",
+              "RelativeToolTip": "Core.Interfaces\\IJwtUtils.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-20T15:05:38.895Z",
               "EditorCaption": ""
             },
             {

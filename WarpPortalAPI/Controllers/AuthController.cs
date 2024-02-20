@@ -57,7 +57,7 @@ namespace WarpPortalAPI.Controllers
                         {
                             LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Register", Detail = JsonConvert.SerializeObject(tblAccount), Addr= context.Connection.RemoteIpAddress.ToString() };
                             _databeseService.AddlogEventSync(logEvent);
-                            string tokenkey = _jwtUtils.GenerateToken(tblAccount);
+                            string tokenkey = _jwtUtils.GenerateToken(tblAccount,1);
                             response.Token = tokenkey;
                             response.IsSuccess = true;
                             response.Message = "Register Success.";
@@ -128,8 +128,8 @@ namespace WarpPortalAPI.Controllers
                 if (state != null)
                 {
                 
-                    response.tblAccount = state;
-                    string tokenkey = _jwtUtils.GenerateToken(response.tblAccount);
+                 //   response.tblAccount = state;
+                    string tokenkey = _jwtUtils.GenerateToken(state, 1);
                     response.Token = tokenkey;
                     response.Message = "Login Success.";
                     response.IsSuccess = true;

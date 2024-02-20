@@ -27,13 +27,21 @@ namespace WarpPortalAPI.Controllers
             _toolsService = toolsService;
         }
 
-        //[HttpPost]
-        //[Authz]
-        //public ActionResult GenerateToken()
-        //{
+        [HttpPost]
+        [Authz]
+        public ActionResult GenerateTokenVer(MdlGenVer mdlGenVer)
+        {
+            HttpContext context = HttpContext;
+            var user = (TblAccount)context.Items["User"];
+            string tokenkey = _jwtUtils.GenerateTokenVer(user, mdlGenVer,2);
 
-        //    return Ok();
-        //}
+            Response reponseModel = new Response();
+            reponseModel.IsSuccess = true;
+            reponseModel.Token = tokenkey;
+
+
+            return Ok(reponseModel);
+        }
 
 
 
@@ -43,17 +51,21 @@ namespace WarpPortalAPI.Controllers
         public ActionResult Verifyslip(IFormCollection data)
         {
             HttpContext context = HttpContext;
+            var verify = (MdlGenVer)context.Items["verify"];
+
             SingleFileModel singleFileModel = new SingleFileModel();
             if (data.Files.Count > 0)
             {
                 singleFileModel.File = data.Files[0];
 
 
-                if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["UserId"]))
+                if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["AccInput"]))
                 {
 
-                    singleFileModel.Amount = data["Amount"];
-                    singleFileModel.BankCode = data["BankCode"];
+
+
+                    verify.Amount = data["Amount"];
+                    verify.BankCode = data["BankCode"];
                     singleFileModel.File = singleFileModel.File;
                     LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel),Addr = context.Connection.RemoteIpAddress.ToString() };
                     _databeseService.AddlogEventSync(logEvent);
@@ -66,7 +78,7 @@ namespace WarpPortalAPI.Controllers
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
                             logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
-                            logSlip.AccInput = singleFileModel.AccInput;
+                            logSlip.AccInput = verify.AccInput;
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;

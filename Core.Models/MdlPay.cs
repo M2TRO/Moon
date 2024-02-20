@@ -37,6 +37,20 @@ namespace Core.Models
         public double Amount { get; set; }
     }
 
+
+
+    public class MdlGenVer 
+    {
+
+        [Required(ErrorMessage = "Required AccInput")]
+        public string AccInput { get; set; }
+
+        [Required(ErrorMessage = "Required BankCode")]
+        public string BankCode { get; set; }
+
+        [Required(ErrorMessage = "Required Amount")]
+        public string Amount { get; set; }
+    }
          public class SingleFileModel : ReponseModel
        {
         //     [Required(ErrorMessage = "Please enter file name")]
@@ -46,18 +60,17 @@ namespace Core.Models
 
 
         public IFormFile File { get; set; }
-
-        public string AccInput { get; set; }
-
+        //public string AccInput { get; set; }
         public DateTime Datetime { get; set; }
-        public string BankCode { get; set; }
-        public string Amount { get; set; }
+        //public string BankCode { get; set; }
+        //public string Amount { get; set; }
     }
         public class ReponseModel
     {
         public string Message { get; set; }
         public bool IsSuccess { get; set; }
         public bool IsResponse { get; set; }
+
     }
 
 

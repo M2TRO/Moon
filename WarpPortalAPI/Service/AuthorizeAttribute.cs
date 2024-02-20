@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json;
+using Core.Models;
 
 namespace WarpPortalAPI.Service
 {
@@ -15,14 +18,17 @@ namespace WarpPortalAPI.Service
             if (allowAnonymous)
                 return;
 
+
+        //    var token = context.HttpContext.Request.Headers["Authorization"];
             // authorization
-
             var user = (TblAccount)context.HttpContext.Items["User"];
-
 
 
             if (user == null)
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+
+
+
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WarpPortalAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03cec29a0606cad0d324b46188c5ee2f20f0e5a3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b7848dc787c1b386515d481b30795ad501d1843")]
 [assembly: System.Reflection.AssemblyProductAttribute("WarpPortalAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WarpPortalAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

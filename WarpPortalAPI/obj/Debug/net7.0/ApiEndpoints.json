@@ -79,12 +79,18 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
-    "Method": "GenerateToken",
-    "RelativePath": "api/Trans/GenerateToken",
+    "Method": "GenerateTokenVer",
+    "RelativePath": "api/Trans/GenerateTokenVer",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "mdlGenVer",
+        "Type": "Core.Models.MdlGenVer",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

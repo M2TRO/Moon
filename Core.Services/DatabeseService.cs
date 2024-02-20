@@ -25,7 +25,7 @@ namespace Core.Services
 
         public TblAccount GetAccountsync(TblAccount tblAccount)
         {
-            var x = _rpaControlDBContext.TblAccounts.Where(m => m.AccName == tblAccount.AccName && m.AccPwd == tblAccount.AccPwd).FirstOrDefault();
+            var x = _rpaControlDBContext.TblAccounts.Where(m => m.AccTel == tblAccount.AccTel && m.AccPwd == tblAccount.AccPwd).FirstOrDefault();
 
             return x;
         }
@@ -86,6 +86,11 @@ namespace Core.Services
         public List<TransBank> GetTransBankbyId(string AccRef)
         {
             return _rpaControlDBContext.TransBanks.Where(m => m.AccRef == AccRef).ToList();
+        }
+
+        public async Task<int> AddLogSlip(LogSlip  logSlip)
+        {
+            return await _rpaControlDBContext.LogSlips.Add(logSlip).Context.SaveChangesAsync();
         }
     }
 

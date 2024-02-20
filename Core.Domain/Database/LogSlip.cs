@@ -9,6 +9,7 @@ namespace Core.Domain.Database
         public string? Ref { get; set; }
         public string? Bank { get; set; }
         public decimal? Amt { get; set; }
+        public string? AccInput { get; set; }
         public bool? IsSuccess { get; set; }
         public string? Message { get; set; }
         public string? Datetime { get; set; }

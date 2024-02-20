@@ -27,25 +27,31 @@ namespace Core.Models
     public class Mdltrans
     {
 
-        [Required(ErrorMessage = "Required Code")]
+        [Required(ErrorMessage = "Required AccNo")]
         public int AccNo { get; set; }
+
         [Required(ErrorMessage = "Required Code")]
         public string Code { get; set; }
+
         [Required(ErrorMessage = "Required Amount")]
         public double Amount { get; set; }
     }
 
-        public class SingleFileModel : ReponseModel
-    {
+         public class SingleFileModel : ReponseModel
+       {
         //     [Required(ErrorMessage = "Please enter file name")]
         //  public string FileName { get; set; }
 
         //   [Required(ErrorMessage = "Please select file")]
+
+
         public IFormFile File { get; set; }
-        public string Datetime { get; set; }
-        public string UserName { get; set; }
-        public string img { get; set; }
-        public string Amt { get; set; }
+
+        public string AccInput { get; set; }
+
+        public DateTime Datetime { get; set; }
+        public string BankCode { get; set; }
+        public string Amount { get; set; }
     }
         public class ReponseModel
     {

@@ -11,7 +11,7 @@ namespace Core.Models
 {
     public class MdlAccount
     {
-        public string AccName { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
         public string AccPwd { get; set; } = null!;
     }
 
@@ -42,12 +42,13 @@ namespace Core.Models
     {
         public TblAccount tblAccount { get; set; }
       
-        public string Token { get; set; }
+   
     }
      public class Response
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public string Token { get; set; }
     }
 
     public class ResCustInfo

@@ -7,7 +7,7 @@ namespace Core.Domain.Database
 {
     public partial class RpaControlDBContext : DbContext
     {
-   
+       
 
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
@@ -78,7 +78,7 @@ namespace Core.Domain.Database
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Detail)
-                    .HasMaxLength(500)
+                    .HasMaxLength(1000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Remark)
@@ -91,6 +91,10 @@ namespace Core.Domain.Database
                 entity.HasNoKey();
 
                 entity.ToTable("LogSlip");
+
+                entity.Property(e => e.AccInput)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Amt).HasColumnType("decimal(10, 2)");
 
@@ -119,7 +123,13 @@ namespace Core.Domain.Database
 
             modelBuilder.Entity<TblAccount>(entity =>
             {
+                entity.HasKey(e => e.AccTel);
+
                 entity.ToTable("TblAccount");
+
+                entity.Property(e => e.AccTel)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.AccEmail)
                     .HasMaxLength(50)
@@ -137,13 +147,13 @@ namespace Core.Domain.Database
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.AccTel)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.ModifyTime).HasColumnType("datetime");
             });

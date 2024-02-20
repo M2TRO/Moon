@@ -30,7 +30,7 @@ namespace WarpPortalAPI.Controllers
         [AllowAnonymous]
         public IActionResult Register(MdlRegister mdlRegister)
         {
-
+            HttpContext context = HttpContext;
             if (ModelState.IsValid)
             {
                 TblAccount tblAccount = new TblAccount()
@@ -45,7 +45,7 @@ namespace WarpPortalAPI.Controllers
                 Response response = new Response();
                 try
                 {
-
+                    tblAccount.AccRef = Guid.NewGuid().ToString();
                     var state = _databeseService.AddAccount(tblAccount);
 
                     while (state.IsCompleted != true) {
@@ -55,6 +55,10 @@ namespace WarpPortalAPI.Controllers
                     {
                         if (state.IsCompletedSuccessfully)
                         {
+                            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Register", Detail = JsonConvert.SerializeObject(tblAccount), Addr= context.Connection.RemoteIpAddress.ToString() };
+                            _databeseService.AddlogEventSync(logEvent);
+                            string tokenkey = _jwtUtils.GenerateToken(tblAccount);
+                            response.Token = tokenkey;
                             response.IsSuccess = true;
                             response.Message = "Register Success.";
                             return Ok(response);
@@ -63,6 +67,15 @@ namespace WarpPortalAPI.Controllers
                         {
                             response.IsSuccess = false;
                             response.Message = state.Exception.InnerExceptions.FirstOrDefault().InnerException.Message;
+
+                            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
+                            _databeseService.AddlogEventSync(logEvent);
+                            if (response.Message.Contains("duplicate"))
+                            {
+                                response.Message = "NumberPhone is use.";
+                                return BadRequest(response);
+                            }
+           
                             return BadRequest(response);
                         }
                     }
@@ -73,6 +86,8 @@ namespace WarpPortalAPI.Controllers
                 {
                     response.IsSuccess = false;
                     response.Message = ex.InnerException.Message;
+                    LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
+                    _databeseService.AddlogEventSync(logEvent);
                     return BadRequest(response);
                 }
 
@@ -91,7 +106,7 @@ namespace WarpPortalAPI.Controllers
         //}
 
 
-            [HttpPost]
+        [HttpPost]
         [AllowAnonymous]
         public IActionResult Login([FromBody] MdlAccount mdlLogin)
         {
@@ -99,8 +114,7 @@ namespace WarpPortalAPI.Controllers
             _databeseService.AddlogEventSync(logEvent);
             TblAccount tblAccount = new TblAccount()
             {
-                AccName = mdlLogin.AccName,
-
+                AccTel = mdlLogin.PhoneNumber,
                 AccPwd = mdlLogin.AccPwd,
 
 
@@ -140,55 +154,10 @@ namespace WarpPortalAPI.Controllers
                 return BadRequest(response);
             }
 
-            //while (state.IsCompleted != true)
-            //{
-
-            //}
-            //if (state.IsCompleted)
-            //{
-            //    if (state.IsCompletedSuccessfully)
-            //    {
-            //        if (state.Result != null)
-            //        {
-
-            //            response.tblAccount = state.Result;
-            //            string tokenkey = _jwtUtils.GenerateToken(response.tblAccount);
-            //            response.Token = tokenkey;
-            //            response.Message = "Login Success.";
-            //            response.IsSuccess = true;
-
-            //             logEvent = new LogEvent() { Code = "10", Remark = "ResLogin", Detail = JsonConvert.SerializeObject(response) };
-            //            _databeseService.AddlogEvent(logEvent);
-            //            return Ok(response);
-            //        }
-            //        else
-            //        {
-            //            response.Message = "User Invalid!";
-            //            response.IsSuccess = false;
-            //            return Ok(response);
-            //        }
-            //    }
-            //    else
-            //    {
-
-
-            //        response.IsSuccess = false;
-            //        logEvent = new LogEvent() { Code = "10", Remark = "ResLogin", Detail = JsonConvert.SerializeObject(response) };
-            //        _databeseService.AddlogEvent(logEvent);
-            //        return BadRequest(response);
-            //    }
-            //}
-
-
-            //   ResToken resToken = new ResToken();
-            //   resToken.Token = tokenkey;
-            //    resToken.IsSuccess = true;
-
-
-            return Ok(ModelState);
-
-
         }
+
+
+
 
         [HttpPost(Name = "GetCustInfo")]
         [HttpGet]

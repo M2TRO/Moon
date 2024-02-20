@@ -27,13 +27,13 @@ namespace WarpPortalAPI.Controllers
             _toolsService = toolsService;
         }
 
-        [HttpPost]
-        [Authz]
-        public ActionResult GenerateToken()
-        {
+        //[HttpPost]
+        //[Authz]
+        //public ActionResult GenerateToken()
+        //{
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
 
 
@@ -52,8 +52,8 @@ namespace WarpPortalAPI.Controllers
                 if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["UserId"]))
                 {
 
-                    singleFileModel.Amt = data["Amount"];
-                    singleFileModel.UserName = data["UserId"];
+                    singleFileModel.Amount = data["Amount"];
+                    singleFileModel.BankCode = data["BankCode"];
                     singleFileModel.File = singleFileModel.File;
                     LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel),Addr = context.Connection.RemoteIpAddress.ToString() };
                     _databeseService.AddlogEventSync(logEvent);
@@ -66,10 +66,11 @@ namespace WarpPortalAPI.Controllers
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
                             logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
+                            logSlip.AccInput = singleFileModel.AccInput;
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
-                            //         var res = _dbLogService.SaveLogSlip(logSlip);
+                              var res = _databeseService.AddLogSlip(logSlip);
                             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDB");
 
                             //create folder if not exist
@@ -169,12 +170,17 @@ namespace WarpPortalAPI.Controllers
             return Ok();
         }
 
+
+
         [Authz]
         [HttpPost]
         public ActionResult Transaction(intrans model)
         {
             HttpContext context = HttpContext;
             var user = (TblAccount)context.Items["User"];
+
+            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Transaction", Detail = JsonConvert.SerializeObject(model), Addr = context.Connection.RemoteIpAddress.ToString() };
+            _databeseService.AddlogEventSync(logEvent);
 
 
             return Ok();

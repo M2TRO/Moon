@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
@@ -37,7 +38,7 @@ namespace WarpPortalAPI.Controllers
                 {
                     AccName = mdlRegister.AccName,
                     AccEmail = mdlRegister.AccEmail,
-                    AccPwd = mdlRegister.AccPwd,
+                    AccPwd = mdlRegister.Password,
                     AccTel = mdlRegister.AccTel,
 
 
@@ -68,15 +69,19 @@ namespace WarpPortalAPI.Controllers
                             response.IsSuccess = false;
                             response.Message = state.Exception.InnerExceptions.FirstOrDefault().InnerException.Message;
 
-                            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
-                            _databeseService.AddlogEventSync(logEvent);
+                          //LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
+                        //    _databeseService.AddlogEventSync(logEvent);
+
                             if (response.Message.Contains("duplicate"))
                             {
+          
                                 response.Message = "NumberPhone is use.";
-                                return BadRequest(response);
+                                response.IsSuccess = false;
+
+                                return Ok(response);
                             }
            
-                            return BadRequest(response);
+                        
                         }
                     }
 
@@ -86,8 +91,8 @@ namespace WarpPortalAPI.Controllers
                 {
                     response.IsSuccess = false;
                     response.Message = ex.InnerException.Message;
-                    LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
-                    _databeseService.AddlogEventSync(logEvent);
+                 //   LogEvent logEvent = new LogEvent() { Code = "10", Remark = "ResRegister", Detail = JsonConvert.SerializeObject(response), Addr = context.Connection.RemoteIpAddress.ToString() };
+                  //  _databeseService.AddlogEventSync(logEvent);
                     return BadRequest(response);
                 }
 
@@ -114,7 +119,7 @@ namespace WarpPortalAPI.Controllers
             _databeseService.AddlogEventSync(logEvent);
             TblAccount tblAccount = new TblAccount()
             {
-                AccTel = mdlLogin.PhoneNumber,
+                AccTel = mdlLogin.AccTel,
                 AccPwd = mdlLogin.AccPwd,
 
 
@@ -127,16 +132,33 @@ namespace WarpPortalAPI.Controllers
 
                 if (state != null)
                 {
-                
-                 //   response.tblAccount = state;
-                    string tokenkey = _jwtUtils.GenerateToken(state, 1);
-                    response.Token = tokenkey;
-                    response.Message = "Login Success.";
-                    response.IsSuccess = true;
 
-                    logEvent = new LogEvent() { Code = "10", Remark = "ResLogin", Detail = JsonConvert.SerializeObject(response) };
-                    _databeseService.AddlogEventSync(logEvent);
-         
+                    //   response.tblAccount = state;
+                    if (state.IsActive.HasValue)
+                    {
+                        if (state.IsActive.Value)
+                        {
+                            string tokenkey = _jwtUtils.GenerateToken(state, 1);
+                            response.Token = tokenkey;
+                            response.Message = "Login Success.";
+                            response.IsSuccess = true;
+
+                            logEvent = new LogEvent() { Code = "10", Remark = "ResLogin", Detail = JsonConvert.SerializeObject(response) };
+                            _databeseService.AddlogEventSync(logEvent);
+
+                            return Ok(response);
+                        }
+                        else
+                        {
+                            response.Message = "User InActive!";
+                            response.IsSuccess = false;
+                        }
+                    }
+                    else
+                    {
+                        response.Message = "User Invalid!";
+                        response.IsSuccess = false;
+                    }
                     return Ok(response);
                 }
                 else
@@ -145,6 +167,9 @@ namespace WarpPortalAPI.Controllers
                     response.IsSuccess = false;
                     return Ok(response);
                 }
+
+
+
             }
             catch
             {
@@ -166,20 +191,21 @@ namespace WarpPortalAPI.Controllers
         {
             HttpContext context = HttpContext;
             var user = (TblAccount)context.Items["User"];
-
-
-
             ResCustInfo resAccount = new ResCustInfo();
+            user.AccPwd = null;
             resAccount.tblAccount = user;
-
-            var App =   _databeseService.GetApplication(user.AccRef);
-            resAccount.application = App.Result.ToList();
-            var list = _databeseService.GetScheduler(user.Id);
-            resAccount.tblSchedulers = list.Result.ToList();
+            var bank = _databeseService.GetTransBankbyId(user.AccRef);
+            resAccount.transBanks = bank;
+            //var App =   _databeseService.GetApplication(user.AccRef);
+            //resAccount.application = App.Result.ToList();
+            //var list = _databeseService.GetScheduler(user.Id);
+            //resAccount.tblSchedulers = list.Result.ToList();
 
             return Ok(resAccount);
         }
       
+
+
         [HttpPost]
         public IActionResult SaveApplication()
         {

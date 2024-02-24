@@ -8,6 +8,7 @@ namespace Core.Domain.Database
     public partial class RpaControlDBContext : DbContext
     {
        
+
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
         {
@@ -16,16 +17,19 @@ namespace Core.Domain.Database
         public virtual DbSet<Application> Applications { get; set; } = null!;
         public virtual DbSet<LogEvent> LogEvents { get; set; } = null!;
         public virtual DbSet<LogSlip> LogSlips { get; set; } = null!;
+        public virtual DbSet<MtBank> MtBanks { get; set; } = null!;
+        public virtual DbSet<MtTransType> MtTransTypes { get; set; } = null!;
         public virtual DbSet<TblAccount> TblAccounts { get; set; } = null!;
         public virtual DbSet<TblScheduler> TblSchedulers { get; set; } = null!;
         public virtual DbSet<TransBank> TransBanks { get; set; } = null!;
+        public virtual DbSet<Transaction> Transactions { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=10.144.41.54;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
+                optionsBuilder.UseSqlServer("Server=192.168.1.40;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
             }
         }
 
@@ -118,6 +122,43 @@ namespace Core.Domain.Database
                 entity.Property(e => e.Ref)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MtBank>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("MT_Bank");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DescEn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("DescEN");
+
+                entity.Property(e => e.DescTh)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("DescTH");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<MtTransType>(entity =>
+            {
+                entity.ToTable("MT_TransType");
+
+                entity.Property(e => e.DescEn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("DescEN");
             });
 
             modelBuilder.Entity<TblAccount>(entity =>
@@ -214,6 +255,21 @@ namespace Core.Domain.Database
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("token");
+            });
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.ToTable("Transaction");
+
+                entity.Property(e => e.AccRef)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amout).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CeatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             OnModelCreatingPartial(modelBuilder);

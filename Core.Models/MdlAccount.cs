@@ -11,7 +11,7 @@ namespace Core.Models
 {
     public class MdlAccount
     {
-        public string PhoneNumber { get; set; } = null!;
+        public string AccTel { get; set; } = null!;
         public string AccPwd { get; set; } = null!;
     }
 
@@ -26,7 +26,10 @@ namespace Core.Models
         public string AccName { get; set; } = null!;
 
         [Required(ErrorMessage = "Required AccPwd!")]
-        public string AccPwd { get; set; } = null!;
+        public string Password { get; set; } = null!;
+
+        [Required(ErrorMessage = "Required AccPwd!")]
+        public string ConfirmPassword { get; set; } = null!;
 
         [Required(ErrorMessage = "Required AccEmail!")]
         [DataType(DataType.EmailAddress)]
@@ -54,8 +57,7 @@ namespace Core.Models
     public class ResCustInfo
     {
         public TblAccount tblAccount { get; set; }
-        public List<Application> application { get; set; }
-        public List<TblScheduler>  tblSchedulers { get; set; }
+        public List<TransBank>  transBanks { get; set; }
 
        
 

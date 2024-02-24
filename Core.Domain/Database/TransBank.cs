@@ -8,6 +8,7 @@ namespace Core.Domain.Database
         public int Id { get; set; }
         public string? AccRef { get; set; }
         public string? PromNo { get; set; }
+        public int? BankId { get; set; }
         public string? Token { get; set; }
         public int? TypeId { get; set; }
         public DateTime? CreatedDate { get; set; }

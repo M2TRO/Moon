@@ -36,6 +36,7 @@ namespace Core.Services
         }
         public async Task<int> AddAccount(TblAccount tblAccount)
         {
+       
             return await _rpaControlDBContext.TblAccounts.Add(tblAccount).Context.SaveChangesAsync();
         }
         public async Task<int> UpdateAccount(TblAccount tblAccount)
@@ -83,11 +84,16 @@ namespace Core.Services
         {
             return  _rpaControlDBContext.LogEvents.Add(logEvent).Context.SaveChanges();
         }
+
         public List<TransBank> GetTransBankbyId(string AccRef)
         {
             return _rpaControlDBContext.TransBanks.Where(m => m.AccRef == AccRef).ToList();
         }
 
+        public int AddTransBankstSync(TransBank  transBank)
+        {
+            return _rpaControlDBContext.TransBanks.Add(transBank).Context.SaveChanges();
+        }
         public async Task<int> AddLogSlip(LogSlip  logSlip)
         {
             return await _rpaControlDBContext.LogSlips.Add(logSlip).Context.SaveChangesAsync();

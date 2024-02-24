@@ -29,5 +29,6 @@ namespace Core.Interfaces
         List<TransBank> GetTransBankbyId(string AccRef);
 
         Task<int> AddLogSlip(LogSlip logSlip);
+        int AddTransBankstSync(TransBank transBank);
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Core.Interfaces")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aade1f0423a7a6d1e231f5848317ad5877d4ab8a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2a3979dcb7abc256dbcbe3f8c9aa0641edb791b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Core.Interfaces")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Core.Interfaces")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

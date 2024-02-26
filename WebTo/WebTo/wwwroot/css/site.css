@@ -1,0 +1,64 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.banner {
+    margin-top:-15px;
+    height: 500px;
+    background-color:  cadetblue
+}
+
+.block-cont
+{
+    margin: 5px 0px 0px 0px;
+    border: 1px solid #dee2e6!important;
+}
+
+
+.form-login {
+    display: block;
+    width: 95%;
+    text-align: -webkit-center;
+    margin: 2px 4px;
+    /* margin-left: 100px;*/
+}
+
+
+    .Requireup span {
+        color: red;
+    }
+.btncustom {
+    width: 150px !important;
+}
+
+.bg-color {
+    background-color: cadetblue;
+}
+.imgResult
+{
+    width:100%;
+}

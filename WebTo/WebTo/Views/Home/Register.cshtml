@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model MdlRegister
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div style="display:block;margin-top:15px;">
+           
+                   @using (Html.BeginForm())
+                        {
+                  
+            <div class="input-group mb-3 align-content-center form-login">
+                <div class="Requireup">
+                    @Html.EditorFor(model => Model.AccName, new { htmlAttributes = new { @class = "form-control", placeholder = "Username" } })
+                    @Html.ValidationMessageFor(model => Model.AccName, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+                <div class="input-group mb-3 align-content-center form-login">
+                    <div class="Requireup">
+                            @Html.PasswordFor(model => model.Password, new { id = "password" ,@class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+
+                </div>
+                <div class="input-group mb-3 align-content-center form-login">
+                    <div class="Requireup">
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+
+                </div>
+                    <div class="input-group mb-3 align-content-center form-login">
+                        <div class="Requireup">
+                            @Html.EditorFor(model => Model.AccEmail, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => Model.AccEmail, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+           
+                    <div class="input-group mb-3 align-content-center form-login">
+
+                        <div class="Requireup">
+                            @Html.EditorFor(model => Model.AccTel, new { htmlAttributes = new { @class = "form-control", placeholder = "Phonenumber" } })
+                            @Html.ValidationMessage("Error1", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => Model.AccTel, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                    <button class="btn btn-outline-success btn-lg" type="submit">Sign Up</button>
+                }
+            </div>
+
+
+        </div>
+      
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+</script>

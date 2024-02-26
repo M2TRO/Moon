@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model MdlAccount
+
+
+<div class="container">
+    <div id="tag1" class="block-cont">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div style="display:inline-grid">
+                    <div class="maincentersub2">   <h2 class="display-4">Web Admin</h2></div>
+                <div style="display:block;width:350px;">
+                  
+                   
+                       @*  @using (Html.BeginForm()) *@
+                        @using (Html.BeginForm("Auth", "Home", FormMethod.Post))
+                        {
+                  
+                                @Html.ValidationMessage("Error1", new { @class = "text-danger" })
+                
+                    <div class="input-group mb-3 align-content-center form-login">
+                                <div class="Requireup">
+                            @Html.EditorFor(model => Model.AccTel, new { htmlAttributes = new { @class = "form-control", placeholder = "PhoneNumber" } })
+                                    @Html.ValidationMessageFor(model => Model.AccTel, "", new { @class = "text-danger" })
+                                </div>
+                     
+                    </div>
+
+                    <div class="input-group mb-3 form-login">
+
+                        <div class="Requireup">
+                            @Html.PasswordFor(model => Model.AccPwd, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(model => Model.AccPwd)
+                        </div>
+                    </div>
+                            <div style="display:inline-flex">
+                                <button class="btn m-md-3 btn-outline-success btncustom btn-lg" type="submit">Login</button>
+                              
+                            </div>
+                        }
+                       
+                        <hr />
+                        <div style="display:inline-flex">
+                            <button class="btn m-md-3 btn-outline-success btncustom btn-lg" onclick="location.href='@Url.Action("Register", "Home")'">Sign up</button>
+                        </div>
+                </div>
+              @*    <div style="display:inline-flex">
+                     <button class="btn-secondary btn-lg" onclick="location.href='@Url.Action("Login", "Home")'">Login</button>
+                    <button class="btn-danger btn-lg" style="margin-left:10px;" onclick="location.href='@Url.Action("Register", "Home")'">Register</button>
+                     
+                </div> *@
+            </div>
+
+        </div>
+        @* <div class="col-sm-6 border border-dark">
+            <div style="display:inline-grid">
+            <button class="btn-danger">Professional</button>
+            </div>
+          </div> *@
+  
+    </div>
+    </div>
+</div>

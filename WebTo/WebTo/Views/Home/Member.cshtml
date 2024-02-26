@@ -1,0 +1,326 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ResCustInfo
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+      
+            <div style="display:block;margin-top:15px;">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" onclick="GetEditModal('AddBank','')" data-bs-toggle="modal" data-bs-target="#myModal">
+                   Add Bank.
+                </button>
+                <input id="AccountRef" hidden disabled class="form-control" value="@Model.tblAccount.AccRef" />
+             
+                </div>
+                </div>
+                </div>
+
+
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>
+                    BankCode
+                </th>
+                <th>
+                    PromptpayNo.
+                </th>
+                <th>
+                    Total.
+                </th>
+
+                <th>
+                    Top up
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Manage
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.transBanks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BankCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PromNo)
+                    </td>
+                    <td>
+                       
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-outline-secondary" onclick="GetEditModal('TopUp','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="TopUp" />
+                    </td>
+                    <td>
+
+
+                        <input type="button" class="btn btn-danger" onclick="GetEditModal('AddBank','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="Edit" />
+                    </td>
+                    <td>
+
+                        <a asp-action="Transfer" asp-route-id="@item.Id">Transfer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+                </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     
+        <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+       
+            <div id="modalbody" class="modal-body">
+@*                 <input id="AccountRef" hidden disabled class="form-control" value="@Model.tblAccount.AccRef"/>
+                <input id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." />
+                <input id="BankCode" class="form-control" placeholder="BankCode." /> *@
+
+
+            </div>
+            <div  class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnSaveConfig" type="button" class="btn btn-primary">Save changes</button>
+
+
+      
+            </div>
+        </div>
+     
+    </div>
+</div>
+
+
+  <script>
+
+      function GetEditModal(_mode, _value) {
+          debugger;
+        var _model;
+        var modal = document.getElementById("myModal");
+        // var span = document.getElementsByClassName("close")[0];
+
+
+        var divModalBody = $('#modalbody');
+
+        var btnSaveConfig = $('#btnSaveConfig');
+
+
+
+        btnSaveConfig.attr("onclick", "SaveData('" + _mode + "')");
+
+        var str = _value.replace(/dbq/g, '"');
+        str = str.replace(/(?:\r\n|\r|\n)/g, ' ');
+    
+        if (_value != '') {
+
+            _model = JSON.parse(str);
+        }
+
+
+        divModalBody.html('');
+
+
+        switch (_mode) {
+
+            case 'AddBank':
+                if (_value == '') {
+       
+                    html = `
+                             <input id="hdID" hidden disabled class="form-control" value="0"/>
+                    <input id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." />
+                         <select id="BankId" class="form-select" aria-label="Default select example">
+
+                  @foreach (var data in Model.mtBanks)
+                  {
+                        <option value="@data.Id">@data.Code</option>
+                    }
+                </select>
+                    `;
+                }
+                else {
+              
+                    html = `
+                                  <input id="hdID" hidden disabled class="form-control" value="`+ _model.Id + `""/>
+                                      <input disabled id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." value="`+ _model.PromNo + `" />
+                                  <select id="BankId" class="form-select" aria-label="Default select example" value="`+ _model.BankId + `">
+
+    @foreach (var data in Model.mtBanks)
+    {
+                                <option value="@data.Id">@data.Code</option>
+    }
+                    </select> 
+                            `;
+                }
+          
+
+
+                divModalBody.html(html);
+                break;
+            case 'TopUp':
+
+                    html = `
+                    <input id="hdID" hidden disabled class="form-control" value="`+ _model.Id + `""/>
+                             <input id="BankCode" hidden disabled class="form-control" value="`+ _model.BankCode + `""/>
+                    <input disabled id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." value="`+ _model.PromNo + `" />
+                    <input id="Amount" type="number" class="form-control" style="margin-bottom:6px" placeholder="Amount." />
+                    <img  id="imgResult" class = "imgResult" src = "">
+                    <div id="confirm"></div>
+                    <div id="verslip"></div>
+                    `;
+                    
+                divModalBody.html(html);
+                break;
+
+        }
+
+      }
+
+
+    function SaveData(_mode) {
+        debugger;
+        switch (_mode) {
+            case 'AddBank':
+
+
+                var AccRef = document.getElementById("AccountRef").value;
+                var PromNo = document.getElementById("PromNo").value;
+                var BankId = document.getElementById("BankId").value;
+               
+                var hid = document.getElementById("hdID").value; //jQuery("#hdID").val();
+
+             
+         
+                var transBank = {
+                    Id: hid == '' ? null : hid,
+                    AccRef: AccRef == '' ? null : AccRef,
+                    PromNo: PromNo == '' ? null : PromNo,
+                    BankId: BankId == '' ? null : BankId
+                };
+
+                if (transBank.PromNo == null) {
+                    alert('PromNo is Null.')
+                    break;
+                }
+             
+       
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Addbank", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(transBank),
+                    dataType: "json",
+                    success: function (data) {
+                        debugger;
+
+
+                    }
+                });
+
+                break;
+            case 'TopUp':
+
+                var AccRef = document.getElementById("AccountRef").value;
+                var Amount = document.getElementById("Amount").value;
+                var PromNo = document.getElementById("PromNo").value;
+                var hid = document.getElementById("hdID").value;
+                var mdlPayInput = {
+                    AccountNo: PromNo,
+                    Amount: Amount,
+                    TransBankId: hid
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GenerateQRCode", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(mdlPayInput),
+                    dataType: "json",
+                    success: function (response) {
+
+                        // $('#imgResult')
+                        //     .attr('src', 'data:image/jpeg;base64,' + response);
+                        $('#imgResult')
+                            .attr('src', response.content);
+
+
+                        var divModalBody = $('#confirm');
+                        divModalBody.html(`<div class="input-group">
+                       <input type="file" class="form-control" Id="File" name = "File"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                  <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick = "SaveData('Verify')"  >Verify Slip</button>
+    </div>`);
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                break;
+            case 'Verify':
+                debugger;
+                var Amount = document.getElementById("Amount").value;
+                var PromNo = document.getElementById("PromNo").value;
+                var BankCode = document.getElementById("BankCode").value;
+                var hid = document.getElementById("hdID").value;
+
+                var file = document.getElementById("File").files[0];
+                // var file_ext = filePath.substr(filePath.lastIndexOf('.') + 1, filePath.length);
+                let formData = new FormData();
+                formData.append("File", file);
+                var genVer = {
+                    AccInput: PromNo,
+                    BankCode: BankCode,
+                    Amount: Amount,
+                   
+                };
+                formData.append("AccInput", PromNo);
+                formData.append("BankCode", BankCode);
+                formData.append("Amount", Amount);
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    method: 'POST',
+                    url: "@Url.Action("verifyslip", "Home")",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        var divModalBody = $('#verslip');
+
+                        
+                        divModalBody.html(`<div class="input-group">
+                                          <a>Total. ` + response.amt + ` </a>
+                        </div>`);
+                        debugger;
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+                break;
+
+        }
+    }
+
+  </script>

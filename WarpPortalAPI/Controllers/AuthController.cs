@@ -194,7 +194,7 @@ namespace WarpPortalAPI.Controllers
             ResCustInfo resAccount = new ResCustInfo();
             user.AccPwd = null;
             resAccount.tblAccount = user;
-            var bank = _databeseService.GetTransBankbyId(user.AccRef);
+            var bank = _databeseService.GetTransBankbyAccRef(user.AccRef);
             resAccount.transBanks = bank;
             //var App =   _databeseService.GetApplication(user.AccRef);
             //resAccount.application = App.Result.ToList();
@@ -203,8 +203,106 @@ namespace WarpPortalAPI.Controllers
 
             return Ok(resAccount);
         }
-      
 
+        [HttpGet]
+        [Authz]
+        public IActionResult GetMTBanks()
+        {
+            var bank = _databeseService.GetMTBanks();
+            return Ok(bank);
+        }
+
+            [HttpPost]
+        [Authz]
+        public IActionResult SaveBank(TransBank transBank)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+
+            }
+            Response response = new Response();
+            try
+            {
+              
+                if (transBank.Id != 0)
+                {
+                   
+                    var state = _databeseService.UpdateTransBankstSync(transBank);
+
+                    while (state.IsCompleted != true)
+                    {
+
+                    }
+                    if (state.IsCompleted)
+                    {
+                        if (state.IsCompletedSuccessfully)
+                        {
+                            response.Message = "Success.";
+                            response.IsSuccess = true;
+                        }
+                        else
+                        {
+                            response.IsSuccess = false;
+                            response.Message = state.Exception.InnerExceptions.FirstOrDefault().InnerException.Message;
+
+                            if (response.Message.Contains("duplicate"))
+                            {
+
+                                response.Message = "Prompay number duplicate.";
+                                response.IsSuccess = false;
+
+                                return Ok(response);
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    var state = _databeseService.AddTransBankstSync(transBank);
+                    while (state.IsCompleted != true)
+                    {
+
+                    }
+                    if (state.IsCompleted)
+                    {
+                        if (state.IsCompletedSuccessfully)
+                        {
+                            response.Message = "Success.";
+                            response.IsSuccess = true;
+                        }
+                        else
+                        {
+                            response.IsSuccess = false;
+                            response.Message = state.Exception.InnerExceptions.FirstOrDefault().InnerException.Message;
+
+                            if (response.Message.Contains("duplicate"))
+                            {
+
+                                response.Message = "Prompay number duplicate.";
+                                response.IsSuccess = false;
+
+                                return Ok(response);
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+                return BadRequest(response);
+            }
+
+         return Ok(response);
+        }
 
         [HttpPost]
         public IActionResult SaveApplication()

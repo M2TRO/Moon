@@ -85,19 +85,73 @@ namespace Core.Services
             return  _rpaControlDBContext.LogEvents.Add(logEvent).Context.SaveChanges();
         }
 
-        public List<TransBank> GetTransBankbyId(string AccRef)
+        public List<TransBank> GetTransBankbyId(int tid)
+        {
+            return _rpaControlDBContext.TransBanks.Where(m => m.Id == tid).ToList();
+        }
+
+        public List<TransBank> GetTransBankbyAccRef(string AccRef)
         {
             return _rpaControlDBContext.TransBanks.Where(m => m.AccRef == AccRef).ToList();
         }
 
-        public int AddTransBankstSync(TransBank  transBank)
+        public List<MtBank> GetMTBanks()
         {
-            return _rpaControlDBContext.TransBanks.Add(transBank).Context.SaveChanges();
+            return _rpaControlDBContext.MtBanks.ToList();
         }
+
+        public async Task<int> AddTransBankstSync(TransBank  transBank)
+        {
+            return await _rpaControlDBContext.TransBanks.Add(transBank).Context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateTransBankstSync(TransBank transBank)
+        {
+            var update = _rpaControlDBContext.TransBanks.Where(m => m.Id == transBank.Id).FirstOrDefault();
+
+            if (update != null)
+            {
+                update.Active = transBank.Active; 
+              //  update.PromNo= transBank.PromNo;
+                update.BankId = transBank.BankId;
+
+                return await _rpaControlDBContext.TransBanks.Update(update).Context.SaveChangesAsync();
+            }
+            else
+            {
+                return await _rpaControlDBContext.TransBanks.Add(transBank).Context.SaveChangesAsync();
+
+            }
+
+
+
+        }
+
         public async Task<int> AddLogSlip(LogSlip  logSlip)
         {
             return await _rpaControlDBContext.LogSlips.Add(logSlip).Context.SaveChangesAsync();
         }
+
+        public async Task<int> AddTransactions(Transaction  transaction)
+        {
+
+            var update = _rpaControlDBContext.Transactions.Where(m => m.Id == transaction.Id).FirstOrDefault();
+
+            if (update != null)
+            {
+                update.Verfify = transaction.Verfify;
+                //  update.PromNo= transBank.PromNo;
+                update.ModifyDate = DateTime.Now;
+
+                return await _rpaControlDBContext.Transactions.Update(update).Context.SaveChangesAsync();
+            }
+            else
+            {
+                return await _rpaControlDBContext.Transactions.Add(transaction).Context.SaveChangesAsync();
+            }
+        }
+        
+
     }
 
 

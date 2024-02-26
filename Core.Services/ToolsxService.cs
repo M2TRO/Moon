@@ -1,5 +1,6 @@
 ﻿using Core.Interfaces;
 using Core.Models;
+using Microsoft.Data.SqlClient.Server;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -38,12 +39,12 @@ namespace Core.Services
                     FileInfo fileInfo = new FileInfo(input.File.FileName);
                     //  string fileName = model.FileName + fileInfo.Extension;
 
-                    string fileNameWithPath = Path.Combine(path, fileInfo.Name);
-                    byte[] dataArray = new byte[100000];
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        input.File.CopyTo(stream);
-                    }
+                    //string fileNameWithPath = Path.Combine(path, fileInfo.Name);
+                    //byte[] dataArray = new byte[100000];
+                    //using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    //{
+                    //    input.File.CopyTo(stream);
+                    //}
 
                     UriBuilder _url = new UriBuilder();
                     _url.Scheme = "http";
@@ -74,24 +75,37 @@ namespace Core.Services
                     + "filename=\"{1}\""
                     + "\r\nContent-Type: {2}\r\n\r\n",
                     "myFile" + "0",
-                    Path.GetFileName(fileNameWithPath),
-                    Path.GetExtension(fileNameWithPath));
+                   input.File.FileName,
+                    Path.GetExtension(input.File.FileName));
                     postDataWriter.Flush();
 
 
 
-                    FileStream fileStream = new FileStream(fileNameWithPath, FileMode.Open, FileAccess.Read);
-                    byte[] buffer = new byte[1024];
-                    int bytesRead = 0;
-                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    //FileStream fileStream = new FileStream(fileNameWithPath, FileMode.Open, FileAccess.Read);
+                    //byte[] buffer = new byte[1024];
+                    //int bytesRead = 0;
+                    //while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+                    //{
+                    //    postDataStream.Write(buffer, 0, bytesRead);
+                    //}
+                    //fileStream.Close();
+
+
+                    //postDataWriter.Write("\r\n--" + boundaryString + "--\r\n");
+                    //postDataWriter.Flush();
+
+                    using (var readStream = (input.File.OpenReadStream()))
                     {
-                        postDataStream.Write(buffer, 0, bytesRead);
+                        byte[] buffer = new byte[1024];
+                        int bytesRead = 0;
+                        while ((bytesRead = readStream.Read(buffer, 0, buffer.Length)) != 0)
+                        {
+                            postDataStream.Write(buffer, 0, bytesRead);
+                        }
+                        readStream.Close();
+                        postDataWriter.Write("\r\n--" + boundaryString + "--\r\n");
+                        postDataWriter.Flush();
                     }
-                    fileStream.Close();
-
-
-                    postDataWriter.Write("\r\n--" + boundaryString + "--\r\n");
-                    postDataWriter.Flush();
 
                     req.ContentLength = postDataStream.Length;
 

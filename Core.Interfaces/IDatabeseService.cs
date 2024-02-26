@@ -26,9 +26,12 @@ namespace Core.Interfaces
 
         Task<int> AddlogEvent(LogEvent logEvent);
         int AddlogEventSync(LogEvent logEvent);
-        List<TransBank> GetTransBankbyId(string AccRef);
-
+        List<TransBank> GetTransBankbyAccRef(string AccRef);
+        List<TransBank> GetTransBankbyId(int tid);
         Task<int> AddLogSlip(LogSlip logSlip);
-        int AddTransBankstSync(TransBank transBank);
+        Task<int> AddTransBankstSync(TransBank transBank);
+        Task<int> UpdateTransBankstSync(TransBank transBank);
+         List<MtBank> GetMTBanks();
+         Task<int> AddTransactions(Transaction transaction);
     }
 }

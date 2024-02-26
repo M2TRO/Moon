@@ -21,6 +21,16 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.AuthController",
+    "Method": "GetMTBanks",
+    "RelativePath": "api/Auth/GetMTBanks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/Login",
     "HttpMethod": "POST",
@@ -59,6 +69,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.AuthController",
+    "Method": "SaveBank",
+    "RelativePath": "api/Auth/SaveBank",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transBank",
+        "Type": "Core.Domain.Database.TransBank",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

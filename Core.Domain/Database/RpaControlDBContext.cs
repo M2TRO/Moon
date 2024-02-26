@@ -7,8 +7,7 @@ namespace Core.Domain.Database
 {
     public partial class RpaControlDBContext : DbContext
     {
-       
-
+ 
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
         {
@@ -233,13 +232,20 @@ namespace Core.Domain.Database
 
             modelBuilder.Entity<TransBank>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.PromNo)
+                    .HasName("PK_TransBank_1");
 
                 entity.ToTable("TransBank");
 
-                entity.Property(e => e.AccRef)
+                entity.Property(e => e.PromNo)
                     .HasMaxLength(15)
                     .IsUnicode(false);
+
+                entity.Property(e => e.AccRef)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Active).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
@@ -247,12 +253,8 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.PromNo)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Token)
-                    .HasMaxLength(50)
+                    .HasMaxLength(500)
                     .IsUnicode(false)
                     .HasColumnName("token");
             });
@@ -270,6 +272,8 @@ namespace Core.Domain.Database
                 entity.Property(e => e.CeatedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
             });
 
             OnModelCreatingPartial(modelBuilder);

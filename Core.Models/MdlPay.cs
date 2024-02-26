@@ -12,9 +12,10 @@ namespace Core.Models
 
     public class MdlPayInput
     {
-     //   [Required(ErrorMessage = "Required AccountNo!")]
-      //  public string AccountNo { get; set; }
+        public int? TransBankId { get; set; }
 
+        [Required(ErrorMessage = "Required AccountNo!")]
+        public string AccountNo { get; set; }
 
         [Required(ErrorMessage = "Required Amount")]
         public double Amount { get; set; }

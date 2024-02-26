@@ -213,44 +213,55 @@ namespace WarpPortalAPI.Controllers
             var user = (TblAccount)context.Items["User"];
             if (user != null)
             {
-                var payid = _databeseService.GetTransBankbyId(user.AccRef);
-                payid.ForEach(m =>
-                {
+                //var payid = _databeseService.GetTransBankbyAccRef(user.AccRef);
+                //payid.ForEach(m =>
+                //{
 
-                    randomAcc.Add(m.PromNo);
-                });
-            }
-
-            Random randNum = new Random();
-            int aRandomPos = randNum.Next(randomAcc.Count);
+                //    randomAcc.Add(m.PromNo);
+                //});
 
 
-            UriBuilder _url = new UriBuilder();
-            _url.Scheme = "https";
-            _url.Host = "promptpay.io";
-            _url.Path = "/" + randomAcc[aRandomPos] + "/" + mdlPayInput.Amount;
-            string urlquery = _url.Uri.AbsoluteUri;
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(urlquery);
+                Random randNum = new Random();
+                int aRandomPos = randNum.Next(randomAcc.Count);
 
 
-            req.Headers.Add("Content-Transfer-Encoding", "8bit");
-            req.ContentType = "application/json";
-            req.KeepAlive = true;
-            req.Method = "GET";
-            req.Timeout = Timeout.Infinite;
-
-            // logEvent = new LogEvent() { Code = "10", Remark = "ResGenerateQRCode", Detail = JsonConvert.SerializeObject(req) };
-            //_databeseService.AddlogEventSync(logEvent);
-
-            var response = req.GetResponse();
+                UriBuilder _url = new UriBuilder();
+                _url.Scheme = "https";
+                _url.Host = "promptpay.io";
+                //_url.Path = "/" + randomAcc[aRandomPos] + "/" + mdlPayInput.Amount;
+                _url.Path = "/" + mdlPayInput.AccountNo + "/" + mdlPayInput.Amount;
+                string urlquery = _url.Uri.AbsoluteUri;
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(urlquery);
 
 
-            FileStreamResult fileStreamResult = File(response.GetResponseStream(), response.ContentType);
-            byte[] data = StreamExtensions.ReadAllBytes(fileStreamResult.FileStream);
+                req.Headers.Add("Content-Transfer-Encoding", "8bit");
+                req.ContentType = "application/json";
+                req.KeepAlive = true;
+                req.Method = "GET";
+                req.Timeout = Timeout.Infinite;
+
+                // logEvent = new LogEvent() { Code = "10", Remark = "ResGenerateQRCode", Detail = JsonConvert.SerializeObject(req) };
+                //_databeseService.AddlogEventSync(logEvent);
+
+                var response = req.GetResponse();
+
+
+                FileStreamResult fileStreamResult = File(response.GetResponseStream(), response.ContentType);
+                byte[] data = StreamExtensions.ReadAllBytes(fileStreamResult.FileStream);
+
+                Transaction transaction = new Transaction();
+                transaction.AccRef = user.AccRef;
+                transaction.Verfify = false;
+                transaction.TransTypeId = 1;
+                transaction.TransBankId = mdlPayInput.TransBankId;
+                transaction.Amout = Convert.ToDecimal(mdlPayInput.Amount);
+                _databeseService.AddTransactions(transaction);
 
 
 
             return File(data, "image/jpeg");
+            }
+            return Unauthorized();
 
         }
     }

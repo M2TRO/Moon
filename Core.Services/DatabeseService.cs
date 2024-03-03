@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Database;
 using Core.Interfaces;
+using Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -150,7 +151,21 @@ namespace Core.Services
                 return await _rpaControlDBContext.Transactions.Add(transaction).Context.SaveChangesAsync();
             }
         }
-        
+
+        public List<Transaction> GetTransection(MdlGetBank BankId)
+        {
+            if(BankId.BankId.HasValue)
+            {
+                return _rpaControlDBContext.Transactions.Where(m=>m.TransBankId == BankId.BankId).ToList();
+            }
+            else
+            {
+                return _rpaControlDBContext.Transactions.ToList();
+            }
+
+          
+        }
+
 
     }
 

@@ -90,7 +90,27 @@ namespace WebTo.Models
         public int? TypeId { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
+    public class MdlGetBank
+    {
+        public int? BankId { get; set; }
+    }
 
+    public class ResTransaction:MdlResponse
+    {
+        public List<Transaction> transactions { get; set; }
+     
+    }
+    public  class Transaction
+    {
+        public int Id { get; set; }
+        public int? TransBankId { get; set; }
+        public int? TransTypeId { get; set; }
+        public string? AccRef { get; set; }
+        public decimal? Amout { get; set; }
+        public bool? Verfify { get; set; }
+        public DateTime? ModifyDate { get; set; }
+        public DateTime? CeatedDate { get; set; }
+    }
     public class MdlPayInput
     {
         public int? TransBankId { get; set; }

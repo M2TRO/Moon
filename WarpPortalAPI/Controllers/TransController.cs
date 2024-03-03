@@ -200,6 +200,15 @@ namespace WarpPortalAPI.Controllers
 
 
         [Authz]
+        [HttpPost]
+        public ActionResult GetTransaction(MdlGetBank BankId)
+        {
+
+            return Ok(_databeseService.GetTransection(BankId));
+        }
+
+
+        [Authz]
         [HttpPost(Name = "PayQRCode")]
         public IActionResult GenerateQRCode(MdlPayInput mdlPayInput)
         {

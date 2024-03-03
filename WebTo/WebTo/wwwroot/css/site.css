@@ -27,9 +27,10 @@ body {
 }
 
 .banner {
-    margin-top:-15px;
+    margin-top: -15px;
     height: 500px;
-    background-color:  cadetblue
+    background-color: cadetblue;
+    opacity: 0.6
 }
 
 .block-cont

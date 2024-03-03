@@ -128,9 +128,6 @@ namespace WebTo.Controllers
                     return View("Register");
                 }
             }
-
-
-
                 return View("Register");
         }
 
@@ -139,15 +136,10 @@ namespace WebTo.Controllers
             var token = HttpContext.Session.GetString("Token");
             if (!string.IsNullOrEmpty(token))
             {
-
                 var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Auth/GetCustInfo", null, token);
                 if (res != null)
                 {
-
                     ResCustInfo response = JsonConvert.DeserializeObject<ResCustInfo>(res.ToString());
-
-
-
                     var mtres = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Auth/GetMTBanks", null, token);
                     response.mtBanks = JsonConvert.DeserializeObject<List<MtBank>>(mtres.ToString());
                     response.transBanks.ForEach(m => { 
@@ -159,14 +151,9 @@ namespace WebTo.Controllers
                     });
                     return View("Member", response);
                 }
-
                 return View("index");
-
             }
-
             return RedirectToAction("index");
-
-     
         }
 
         [HttpPost]
@@ -183,6 +170,28 @@ namespace WebTo.Controllers
             return Json(res);
 
            
+        }
+
+
+        [HttpPost]
+        public JsonResult GetTransection([FromBody]MdlGetBank  mdlGetBank)
+        {
+            var token = HttpContext.Session.GetString("Token");
+            ResTransaction mdlResponse = new ResTransaction();
+            if (!string.IsNullOrEmpty(token))
+            {
+                var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Trans/GetTransaction", mdlGetBank, token);
+                var resc = JsonConvert.DeserializeObject<List<Transaction>>(res.ToString());
+
+                mdlResponse.IsSuccess = true;
+                mdlResponse.transactions = resc.Where(m=> m.Verfify == false).OrderBy(m=>m.CeatedDate).ToList();
+
+                return Json(mdlResponse);
+            }
+
+         
+            mdlResponse.IsSuccess = false;
+            return Json(mdlResponse);
         }
 
         [HttpPost]

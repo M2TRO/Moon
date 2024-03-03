@@ -121,6 +121,22 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "GetTransaction",
+    "RelativePath": "api/Trans/GetTransaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "BankId",
+        "Type": "Core.Models.MdlGetBank",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "Transaction",
     "RelativePath": "api/Trans/Transaction",
     "HttpMethod": "POST",

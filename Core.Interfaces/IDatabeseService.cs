@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Database;
+using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +34,7 @@ namespace Core.Interfaces
         Task<int> UpdateTransBankstSync(TransBank transBank);
          List<MtBank> GetMTBanks();
          Task<int> AddTransactions(Transaction transaction);
+
+        List<Transaction> GetTransection(MdlGetBank BankId);
     }
 }

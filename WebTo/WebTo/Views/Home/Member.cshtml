@@ -36,7 +36,9 @@
                 <th>
                     Total.
                 </th>
-
+                <th>
+                    Transection.
+                </th>
                 <th>
                     Top up
                 </th>
@@ -59,7 +61,10 @@
                         @Html.DisplayFor(modelItem => item.PromNo)
                     </td>
                     <td>
-                       
+
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-outline-secondary" onclick="GetEditModal('trans','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="View" />
                     </td>
                     <td>
                         <input type="button" class="btn btn-outline-secondary" onclick="GetEditModal('TopUp','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="TopUp" />
@@ -144,8 +149,7 @@
             case 'AddBank':
                 if (_value == '') {
        
-                    html = `
-                             <input id="hdID" hidden disabled class="form-control" value="0"/>
+                    html = `<input id="hdID" hidden disabled class="form-control" value="0"/>
                     <input id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." />
                          <select id="BankId" class="form-select" aria-label="Default select example">
 
@@ -158,8 +162,7 @@
                 }
                 else {
               
-                    html = `
-                                  <input id="hdID" hidden disabled class="form-control" value="`+ _model.Id + `""/>
+                    html = `<input id="hdID" hidden disabled class="form-control" value="`+ _model.Id + `""/>
                                       <input disabled id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." value="`+ _model.PromNo + `" />
                                   <select id="BankId" class="form-select" aria-label="Default select example" value="`+ _model.BankId + `">
 
@@ -188,6 +191,67 @@
                     `;
                     
                 divModalBody.html(html);
+                break;
+            case 'trans':
+
+                var mdlGetBank = {
+                    BankId: _model.Id
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetTransection", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(mdlGetBank),
+                    dataType: "json",
+                    success: function (data) {
+                          debugger;
+
+                      
+
+                        html = `   <table class="table table-hover table-responsive-sm table-bordered"> <thead>
+                   <tr>
+                    <th>
+                            Amout
+                    </th>
+                    <th>
+                            Verfify.
+                    </th>
+                    <th>
+                            CeatedDate.
+                    </th>
+                </tr>
+                </thead>
+                  <tbody id = "ddtbody">
+                  </tbody>
+                  </table>
+          `;
+               divModalBody.html(html);
+
+                        $('#ddtbody').html("");
+                        $.each(data.transactions, function (index, value) {
+
+                            $('#ddtbody').append(`
+                                 <tr>
+                        <td>
+                                          <label>`+ value.amout + `</lable>
+                        </td>
+                        <td>
+                                     <label>`+ value.verfify + `</lable>
+                        </td>
+                        <td>
+                                  <label>`+ value.ceatedDate + `</lable>
+                        </td>
+                        </tr>
+                            `)
+
+                        });
+
+                    }
+                });
+
+    
+              
                 break;
 
         }
@@ -230,8 +294,8 @@
                     data: JSON.stringify(transBank),
                     dataType: "json",
                     success: function (data) {
-                        debugger;
-
+                      //  debugger;
+                        window.location.reload();
 
                     }
                 });

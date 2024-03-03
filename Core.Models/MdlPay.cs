@@ -10,6 +10,10 @@ namespace Core.Models
 
     }
 
+    public class MdlGetBank
+    {
+        public int? BankId { get; set; }
+    }
     public class MdlPayInput
     {
         public int? TransBankId { get; set; }

@@ -137,6 +137,16 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "test",
+    "RelativePath": "api/Trans/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "Transaction",
     "RelativePath": "api/Trans/Transaction",
     "HttpMethod": "POST",
@@ -146,6 +156,22 @@
       {
         "Name": "model",
         "Type": "Core.Models.intrans",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "VerifyData",
+    "RelativePath": "api/Trans/VerifyData",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Core.Models.MdlData",
         "IsRequired": true
       }
     ],

@@ -77,7 +77,11 @@ namespace Core.Models
         public bool IsResponse { get; set; }
 
     }
-
+    public class MdlData
+    {
+        public string address { get; set; }
+        public string message { get; set; }
+    }
 
     public class ResVerSlip : Response
     {

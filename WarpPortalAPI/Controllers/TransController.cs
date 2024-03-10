@@ -43,10 +43,26 @@ namespace WarpPortalAPI.Controllers
             return Ok(reponseModel);
         }
 
+        [HttpGet]
+        public ActionResult test()
+        {
 
+            return Ok();
+        }
 
+        [HttpPost]
+        public ActionResult VerifyData(MdlData data)
+        {
 
-        [Authz]
+            LogEvent  logEvent = new LogEvent();
+            logEvent.Code = "99";
+            logEvent.Detail = JsonConvert.SerializeObject(data);
+
+            _databeseService.AddlogEvent(logEvent);
+            return Ok();
+        }
+
+            [Authz]
         [HttpPost]
         public ActionResult Verifyslip(IFormCollection data)
         {

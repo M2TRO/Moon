@@ -63,3 +63,19 @@ body {
 {
     width:100%;
 }
+.dynamicpop {
+    display: inline-flex;
+    width: 100%;
+    align-content: center;
+    background-color: darkslategrey;
+}
+
+.blockshow {
+    display: inline-flex;
+    background-color:#fff;
+    border-radius:25px;
+    width:95%;
+    height:100px;
+    margin: 5px 0px;
+    animation: expand .5s ease-in-out;
+}

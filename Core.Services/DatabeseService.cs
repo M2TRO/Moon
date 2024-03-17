@@ -166,6 +166,19 @@ namespace Core.Services
           
         }
 
+        public List<LogsMsgsm> GetLogsMsgsms()
+        {
+            return _rpaControlDBContext.LogsMsgsms.Take(15).OrderByDescending(m=>m.CreatedTime).ToList();
+        }
+
+
+        public async Task<int> AddLogsMsgsms(LogsMsgsm  logsMsgsm)
+        {
+            return await _rpaControlDBContext.LogsMsgsms.Add(logsMsgsm).Context.SaveChangesAsync();
+        }
+      
+
+
 
     }
 

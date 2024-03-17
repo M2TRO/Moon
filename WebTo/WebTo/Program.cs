@@ -1,7 +1,6 @@
 using WebTo.Interfaces;
 using WebTo.Models;
 using WebTo.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var mvcBuilder = builder.Services.AddRazorPages();

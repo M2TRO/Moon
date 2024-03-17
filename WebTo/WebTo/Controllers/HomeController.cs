@@ -32,6 +32,10 @@ namespace WebTo.Controllers
         {
             return View();
         }
+
+
+
+
         [HttpPost]
         public IActionResult Index(MdlAccount auth)
         {
@@ -41,6 +45,25 @@ namespace WebTo.Controllers
                 return View();
             }
             return View();
+        }
+
+
+        public IActionResult Monitor(string id)
+        {
+
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Index");
+            }
+
+
+            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, token);
+
+
+            List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
+            return View(response);
+        
         }
 
 
@@ -54,6 +77,8 @@ namespace WebTo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
 
 
         [HttpPost]
@@ -170,6 +195,26 @@ namespace WebTo.Controllers
             return Json(res);
 
            
+        }
+
+        [HttpGet]
+        public JsonResult RealtimeLogSms()
+        {
+
+            var token = HttpContext.Session.GetString("Token");
+            //if (string.IsNullOrEmpty(token))
+            //{
+            //    return RedirectToAction("index");
+            //}
+
+        
+            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, token);
+
+
+            List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
+            return Json(response);
+
+
         }
 
 

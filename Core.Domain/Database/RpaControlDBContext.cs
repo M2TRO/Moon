@@ -8,6 +8,7 @@ namespace Core.Domain.Database
     public partial class RpaControlDBContext : DbContext
     {
  
+
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
         {
@@ -16,6 +17,7 @@ namespace Core.Domain.Database
         public virtual DbSet<Application> Applications { get; set; } = null!;
         public virtual DbSet<LogEvent> LogEvents { get; set; } = null!;
         public virtual DbSet<LogSlip> LogSlips { get; set; } = null!;
+        public virtual DbSet<LogsMsgsm> LogsMsgsms { get; set; } = null!;
         public virtual DbSet<MtBank> MtBanks { get; set; } = null!;
         public virtual DbSet<MtTransType> MtTransTypes { get; set; } = null!;
         public virtual DbSet<TblAccount> TblAccounts { get; set; } = null!;
@@ -28,7 +30,7 @@ namespace Core.Domain.Database
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.1.40;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
+                optionsBuilder.UseSqlServer("Server=10.144.41.54;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
             }
         }
 
@@ -121,6 +123,33 @@ namespace Core.Domain.Database
                 entity.Property(e => e.Ref)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<LogsMsgsm>(entity =>
+            {
+                entity.Property(e => e.Amout).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedTime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Detail)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Msg)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("msg");
+
+                entity.Property(e => e.Sender)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("sender");
             });
 
             modelBuilder.Entity<MtBank>(entity =>

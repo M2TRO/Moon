@@ -9,7 +9,11 @@
     <div class="row">
         <div class="col">
 
-      
+            <div style="display:block;margin-top:15px;">
+                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Monitor", "Home")'">
+                    View Transection
+                </button>
+                </div>
             <div style="display:block;margin-top:15px;">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" onclick="GetEditModal('AddBank','')" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -46,6 +50,9 @@
                     Edit
                 </th>
                 <th>
+                    Monitor
+                </th>
+                <th>
                     Manage
                 </th>
             </tr>
@@ -73,6 +80,10 @@
 
 
                         <input type="button" class="btn btn-danger" onclick="GetEditModal('AddBank','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="Edit" />
+                    </td>
+                    <td>
+
+                        <a class="btn btn-outline-secondary" asp-action="Monitor" asp-route-id="@item.PromNo">Mionitor</a>
                     </td>
                     <td>
 

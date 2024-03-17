@@ -36,5 +36,8 @@ namespace Core.Interfaces
          Task<int> AddTransactions(Transaction transaction);
 
         List<Transaction> GetTransection(MdlGetBank BankId);
+
+         Task<int> AddLogsMsgsms(LogsMsgsm logsMsgsm);
+        List<LogsMsgsm> GetLogsMsgsms();
     }
 }

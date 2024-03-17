@@ -121,6 +121,16 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "GetLogsMsgsms",
+    "RelativePath": "api/Trans/GetLogsMsgsms",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "GetTransaction",
     "RelativePath": "api/Trans/GetTransaction",
     "HttpMethod": "POST",
@@ -133,16 +143,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarpPortalAPI.Controllers.TransController",
-    "Method": "test",
-    "RelativePath": "api/Trans/test",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {

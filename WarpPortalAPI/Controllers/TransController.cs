@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
 using WarpPortalAPI.Service;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WarpPortalAPI.Controllers
@@ -33,7 +34,7 @@ namespace WarpPortalAPI.Controllers
         {
             HttpContext context = HttpContext;
             var user = (TblAccount)context.Items["User"];
-            string tokenkey = _jwtUtils.GenerateTokenVer(user, mdlGenVer,2);
+            string tokenkey = _jwtUtils.GenerateTokenVer(user, mdlGenVer, 2);
 
             Response reponseModel = new Response();
             reponseModel.IsSuccess = true;
@@ -44,25 +45,31 @@ namespace WarpPortalAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult test()
+        public ActionResult GetLogsMsgsms()
         {
+            var data = _databeseService.GetLogsMsgsms();
 
-            return Ok();
+
+            return Ok(data);
         }
 
         [HttpPost]
         public ActionResult VerifyData(MdlData data)
         {
 
-            LogEvent  logEvent = new LogEvent();
+            LogsMsgsm logEvent = new LogsMsgsm();
             logEvent.Code = "99";
+            logEvent.Sender = data.sender;
             logEvent.Detail = JsonConvert.SerializeObject(data);
 
-            _databeseService.AddlogEvent(logEvent);
+            _databeseService.AddLogsMsgsms(logEvent);
             return Ok();
         }
 
-            [Authz]
+
+
+
+        [Authz]
         [HttpPost]
         public ActionResult Verifyslip(IFormCollection data)
         {
@@ -83,7 +90,7 @@ namespace WarpPortalAPI.Controllers
                     verify.Amount = data["Amount"];
                     verify.BankCode = data["BankCode"];
                     singleFileModel.File = singleFileModel.File;
-                    LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel),Addr = context.Connection.RemoteIpAddress.ToString() };
+                    LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel), Addr = context.Connection.RemoteIpAddress.ToString() };
                     _databeseService.AddlogEventSync(logEvent);
                     try
                     {
@@ -98,7 +105,7 @@ namespace WarpPortalAPI.Controllers
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
-                              var res = _databeseService.AddLogSlip(logSlip);
+                            var res = _databeseService.AddLogSlip(logSlip);
                             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDB");
 
                             //create folder if not exist
@@ -229,12 +236,12 @@ namespace WarpPortalAPI.Controllers
         public IActionResult GenerateQRCode(MdlPayInput mdlPayInput)
         {
             HttpContext context = HttpContext;
-            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "GenerateQRCode", Detail = JsonConvert.SerializeObject(mdlPayInput),Addr = context.Connection.RemoteIpAddress.ToString() };
+            LogEvent logEvent = new LogEvent() { Code = "10", Remark = "GenerateQRCode", Detail = JsonConvert.SerializeObject(mdlPayInput), Addr = context.Connection.RemoteIpAddress.ToString() };
             _databeseService.AddlogEventSync(logEvent);
             List<string> randomAcc = new List<string>();
 
-          
-      
+
+
             var user = (TblAccount)context.Items["User"];
             if (user != null)
             {
@@ -284,7 +291,7 @@ namespace WarpPortalAPI.Controllers
 
 
 
-            return File(data, "image/jpeg");
+                return File(data, "image/jpeg");
             }
             return Unauthorized();
 

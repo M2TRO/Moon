@@ -79,8 +79,8 @@ namespace Core.Models
     }
     public class MdlData
     {
-        public string address { get; set; }
-        public string message { get; set; }
+        public string sender { get; set; }
+        public string msg { get; set; }
     }
 
     public class ResVerSlip : Response

@@ -1,12 +1,16 @@
 html {
   font-size: 14px;
+  font-family:Tahoma;
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
-}
+ 
+ }
+
+
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -64,18 +68,44 @@ body {
     width:100%;
 }
 .dynamicpop {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 5px;
+    justify-content: center;
     width: 100%;
     align-content: center;
     background-color: darkslategrey;
 }
 
 .blockshow {
-    display: inline-flex;
-    background-color:#fff;
-    border-radius:25px;
-    width:95%;
-    height:100px;
-    margin: 5px 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #fff;
+    border-radius: 25px;
+    text-align: center;
+    width: 95%;
+    height: 100px;
+    margin: 5px 5px;
     animation: expand .5s ease-in-out;
+    font-family: Tahoma;
 }
+@keyframes expand{
+    from{
+        transform:scale(0);
+        opacity:0;
+        background:#5470B0;
+    }
+}
+
+.blockshow-item:nth-child(1){
+    color:red;
+}
+.blockshow-item:nth-child(2) {
+    color:blue;
+}
+@media only screen and (max-width: 768px) {
+
+    .blockshow {
+        grid-template-columns: 1fr;
+    }
+    }

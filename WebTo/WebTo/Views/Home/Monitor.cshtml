@@ -10,21 +10,29 @@
         @foreach (var item in Model)
         {
             <div class="blockshow">
-                <h3>@item.Sender</h3>
-                <h2>@item.Msg</h2>
+                <div class="blockshow-item">
+              
+                <h4>@item.Sender</h4>
+                <h6>@item.CreatedTime</h6>
+                 
+                </div>
+                <div class="blockshow-item">
+                <h4>@item.Msg</h4>
+             
+                </div>
             </div>
         }
     </div>
 </div>
 <script>
 
-  // var myvar = setInterval(mytime,4000)
+   //var myvar = setInterval(mytime,4000)
 
     function mytime(){
     
        // alert('check');
         var popup = $(".dynamicpop")
-        popup.html('');
+    //    popup.html('');
         debugger;
         $.ajax({
             type: "GET",
@@ -32,13 +40,32 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                $.each(data, function (index, value) {
+                if (data != null) {
+
                     $(popup).prepend(`<div class="blockshow">
-                                             <h3>`+ value.sender + `</h3>
-                                                      <h2>`+ value.detail + `</h2>
-                            </div>`);
-                });
-               
+                                     <div class="blockshow-item">
+
+                                        <h5>`+ data.sender + `</h5>
+
+                        </div>
+                        <div class="blockshow-item">
+                                        <h4>`+ data.msg + `</h4>
+                        </div>
+                                </div>`);
+
+                // $.each(data, function (index, value) {
+                //     $(popup).prepend(`<div class="blockshow">
+                //                  <div class="blockshow-item">
+
+                //                 <h5>`+ value.sender + `</h5>
+
+                //     </div>
+                //     <div class="blockshow-item">
+                //                 <h4>`+ value.msg + `</h4>
+                //     </div>
+                //             </div>`);
+                // });
+                }
                 // alert('check');
                 debugger;
             }

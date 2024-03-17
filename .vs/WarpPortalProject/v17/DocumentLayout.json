@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "D:\\Develop\\GitCode\\MoonDev\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|d:\\develop\\gitcode\\moondev\\core.domain\\database\\logsmsgsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\logsmsgsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|D:\\Develop\\GitCode\\MoonDev\\core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|d:\\develop\\gitcode\\moondev\\warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F267E61-C721-418F-A94C-ADD4E23E88B6}|WarpPortalAPI\\WarpPortalAPI.csproj|solutionrelative:warpportalapi\\controllers\\transcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{81A20D53-FD07-40B0-AF32-3B0AB3CD227B}|Core.Services\\Core.Services.csproj|D:\\Develop\\GitCode\\MoonDev\\core.services\\databeseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81A20D53-FD07-40B0-AF32-3B0AB3CD227B}|Core.Services\\Core.Services.csproj|solutionrelative:core.services\\databeseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|d:\\develop\\gitcode\\moondev\\core.domain\\database\\logsmsgsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\logsmsgsm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|D:\\Develop\\GitCode\\MoonDev\\core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|solutionrelative:core.domain\\database\\rpacontroldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AD1C80FB-68E2-4630-AC6D-6461955B9AD5}|Core.Domain\\Core.Domain.csproj|D:\\Develop\\GitCode\\MoonDev\\core.domain\\database\\transbank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -102,17 +102,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "LogsMsgsm.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\LogsMsgsm.cs",
               "RelativeDocumentMoniker": "Core.Domain\\Database\\LogsMsgsm.cs",
               "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\LogsMsgsm.cs",
               "RelativeToolTip": "Core.Domain\\Database\\LogsMsgsm.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAyAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAgAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-17T13:06:08.91Z",
               "EditorCaption": ""
@@ -144,7 +144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "DatabeseService.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Services\\DatabeseService.cs",
               "RelativeDocumentMoniker": "Core.Services\\DatabeseService.cs",
@@ -157,13 +157,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "TransController.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\TransController.cs",
               "RelativeDocumentMoniker": "WarpPortalAPI\\Controllers\\TransController.cs",
               "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\WarpPortalAPI\\Controllers\\TransController.cs",
               "RelativeToolTip": "WarpPortalAPI\\Controllers\\TransController.cs",
-              "ViewState": "AQIAABcAAAAAAAAAAAA0wDEAAAAzAAAA",
+              "ViewState": "AQIAABcAAAAAAAAAAAA0wCMAAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-17T19:39:57.491Z",
               "EditorCaption": ""
@@ -196,12 +196,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "RpaControlDBContext.cs",
               "DocumentMoniker": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs",
               "RelativeDocumentMoniker": "Core.Domain\\Database\\RpaControlDBContext.cs",
-              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs*",
-              "RelativeToolTip": "Core.Domain\\Database\\RpaControlDBContext.cs*",
+              "ToolTip": "D:\\Develop\\GitCode\\MoonDev\\Core.Domain\\Database\\RpaControlDBContext.cs",
+              "RelativeToolTip": "Core.Domain\\Database\\RpaControlDBContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-18T04:12:28.14Z",

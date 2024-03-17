@@ -62,6 +62,7 @@ namespace WebTo.Controllers
 
 
             List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
+            checkdate = response.Count;
             return View(response);
         
         }
@@ -197,6 +198,7 @@ namespace WebTo.Controllers
            
         }
 
+        public static int? checkdate  =0;
         [HttpGet]
         public JsonResult RealtimeLogSms()
         {
@@ -212,7 +214,22 @@ namespace WebTo.Controllers
 
 
             List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
-            return Json(response);
+
+            if(checkdate != response.Count)
+            {
+                checkdate = response.Count;
+
+
+                return Json(response.FirstOrDefault()) ;
+            }
+            else
+            {
+                return Json(null);
+
+            }
+
+
+          
 
 
         }

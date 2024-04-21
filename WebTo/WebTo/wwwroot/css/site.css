@@ -10,7 +10,68 @@ html {
  
  }
 
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
 
+    /* Sidebar links */
+    .sidebar a {
+        display: block;
+        color: black;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+        /* Active/current link */
+        .sidebar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        /* Links on mouse-over */
+        .sidebar a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+        .sidebar a {
+            float: left;
+        }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -32,9 +93,9 @@ body {
 
 .banner {
     margin-top: -15px;
-    height: 500px;
-    background-color: cadetblue;
-    opacity: 0.6
+    height: 400px;
+    opacity: 0.6 ;
+ /*   background-image: url('../image/ppgrbem-cool-rainbow-wallpaper.jpg');*/
 }
 
 .block-cont
@@ -74,14 +135,24 @@ body {
     justify-content: center;
     width: 100%;
     align-content: center;
-    background-color: darkslategrey;
+   /* background-color: darkslategrey;*/
 }
+.output
+{
+    display:block;
+}
+    .output h3{
+        color:forestgreen;
+    }
 
+    .output h2 {
+        color: red;
+    }
 .blockshow {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    background-color: #fff;
-    border-radius: 25px;
+    grid-template-columns: 200px 1fr 100px;
+    background-color: #4d004d;
+    /*  border-radius: 25px;*/
     text-align: center;
     width: 95%;
     height: 100px;
@@ -89,6 +160,26 @@ body {
     animation: expand .5s ease-in-out;
     font-family: Tahoma;
 }
+
+    .blockshow button:hover{
+
+        background-color:goldenrod;
+        
+    }
+
+.show {
+    display: inline-block;
+    background-color: black;
+     
+    opacity: 0.9
+}
+
+.show label{
+    font-family:Tahoma;
+    font-style:normal;
+    font-size:1.4rem;
+}
+
 @keyframes expand{
     from{
         transform:scale(0);
@@ -96,13 +187,94 @@ body {
         background:#5470B0;
     }
 }
+.table{
+    background-color:whitesmoke;
+}
 
-.blockshow-item:nth-child(1){
-    color:red;
+
+.showline {
+    display: block;
 }
-.blockshow-item:nth-child(2) {
-    color:blue;
+
+    .blockshow-item {
+    display:inline-grid;
+  
 }
+
+.blockshow-item:nth-child(1) {
+    color: yellow;
+   
+}
+    .blockshow-item:nth-child(2) {
+        color: whitesmoke;
+        align-content: space-evenly;
+    }
+
+
+/* ===================== FILE INPUT ===================== */
+.file-area {
+    width: 100%;
+    position: relative;
+    input [type=file]
+
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-dummy {
+    width: 100%;
+    padding: 30px;
+    background: rgba(255,255,255,0.2);
+    border: 2px dashed rgba(255,255,255,0.2);
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+    .success
+
+{
+    display: none;
+}
+
+}
+
+&:hover .file-dummy {
+    background: rgba(255,255,255,0.1);
+}
+
+input[type=file]:focus + .file-dummy {
+    outline: 2px solid rgba(255,255,255,0.5);
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+input[type=file]:valid + .file-dummy {
+    border-color: rgba(0,255,0,0.4);
+    background-color: rgba(0,255,0,0.3);
+    .success
+
+{
+    display: inline-block;
+}
+
+.default {
+    display: none;
+}
+
+}
+}
+
+
+
+
+
+
+
 @media only screen and (max-width: 768px) {
 
     .blockshow {

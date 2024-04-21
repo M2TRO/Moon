@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Core.Services
 {
@@ -132,6 +133,13 @@ namespace Core.Services
         {
             return await _rpaControlDBContext.LogSlips.Add(logSlip).Context.SaveChangesAsync();
         }
+        
+
+        public int AddlogSlipSync(LogSlip logSlip)
+        {
+            return _rpaControlDBContext.LogSlips.Add(logSlip).Context.SaveChanges();
+        }
+
 
         public async Task<int> AddTransactions(Transaction  transaction)
         {
@@ -154,7 +162,7 @@ namespace Core.Services
 
         public List<Transaction> GetTransection(MdlGetBank BankId)
         {
-            if(BankId.BankId.HasValue)
+            if(BankId != null )
             {
                 return _rpaControlDBContext.Transactions.Where(m=>m.TransBankId == BankId.BankId).ToList();
             }
@@ -168,17 +176,48 @@ namespace Core.Services
 
         public List<LogsMsgsm> GetLogsMsgsms()
         {
-            return _rpaControlDBContext.LogsMsgsms.Take(15).OrderByDescending(m=>m.CreatedTime).ToList();
+            var data = _rpaControlDBContext.LogsMsgsms.Select(m => new { m.Id, m.Code, m.Msg, m.Amout ,m.CreatedTime,m.Sender,m.Active}).OrderByDescending(m=>m.CreatedTime).ToList();
+
+            List<LogsMsgsm> logsMsgsms = new List<LogsMsgsm>();
+            data.ForEach(m => {
+                if(m.Active == true)
+                logsMsgsms.Add(new LogsMsgsm {  Id = m.Id, Code = m.Code, Amout = m.Amout, Msg = m.Msg, CreatedTime = m.CreatedTime , Sender = m.Sender });
+            });
+
+            return logsMsgsms;
         }
 
 
-        public async Task<int> AddLogsMsgsms(LogsMsgsm  logsMsgsm)
+
+        public List<TransVer> GetTransVers()
         {
-            return await _rpaControlDBContext.LogsMsgsms.Add(logsMsgsm).Context.SaveChangesAsync();
+            var data = _rpaControlDBContext.TransVers.ToList();
+            return data;
+        }
+        public int AddLogsMsgsms(LogsMsgsm  logsMsgsm)
+        {
+
+
+            var s =   _rpaControlDBContext.LogsMsgsms.Add(logsMsgsm).Context.SaveChanges();
+            return  logsMsgsm.Id;
         }
       
+        public int UpdateActiveLogs(LogsMsgsm logsMsgsm)
+        {
+            return _rpaControlDBContext.LogsMsgsms.Update(logsMsgsm).Context.SaveChanges();
+        }
+        public int AddTransVer(TransVer  transVer)
+        {
 
 
+            var s = _rpaControlDBContext.TransVers.Add(transVer).Context.SaveChanges();
+          var Update=  _rpaControlDBContext.LogsMsgsms.Where(m => m.Id == transVer.LogId).FirstOrDefault();
+            Update.Active = false;
+
+            _rpaControlDBContext.LogsMsgsms.Update(Update).Context.SaveChanges() ;
+
+            return transVer.Id;
+        }
 
     }
 

@@ -47,14 +47,17 @@ namespace Core.Models
     public class MdlGenVer 
     {
 
-        [Required(ErrorMessage = "Required AccInput")]
-        public string AccInput { get; set; }
+        //[Required(ErrorMessage = "Required AccInput")]
+        //public string AccInput { get; set; }
 
-        [Required(ErrorMessage = "Required BankCode")]
-        public string BankCode { get; set; }
+        //[Required(ErrorMessage = "Required BankCode")]
+        //public string BankCode { get; set; }
 
         [Required(ErrorMessage = "Required Amount")]
         public string Amount { get; set; }
+
+        [Required(ErrorMessage = "Required Amount")]
+        public string OrderId { get; set; }
     }
          public class SingleFileModel : ReponseModel
        {
@@ -81,6 +84,22 @@ namespace Core.Models
     {
         public string sender { get; set; }
         public string msg { get; set; }
+        public string Code { get; set; }
+    }
+    public class MdlSaveTran
+    {
+
+        public  string? Amount { get; set; }
+        public string? OrderId { get; set; }
+        public string? Bankcode { get; set; }
+        public string? LogId { get; set; }
+        public bool state { get; set; }
+
+    }
+    public class Mdlaccept
+    {
+       public int TranId { get; set; }
+
     }
 
     public class ResVerSlip : Response
@@ -88,7 +107,8 @@ namespace Core.Models
         public string Bank { get; set; }
         public string Amt { get; set; }
         public string Datetime { get; set; }
-
+        public bool VerifyAI { get; set; }
+        public bool Verify { get; set; }
         public DateTime? CreatedTime { get; set; }
 
     }
@@ -98,6 +118,12 @@ namespace Core.Models
         public string BankName { get; set; }
         public string Amt { get; set; }
         public string Datetime { get; set; }
+    }
+
+    public class SaveRes : Response
+    {
+        public int Id { get; set; }
+   
     }
 
     public class MdlDataRes : Response

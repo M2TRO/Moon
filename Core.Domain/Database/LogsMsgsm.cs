@@ -12,5 +12,6 @@ namespace Core.Domain.Database
         public decimal? Amout { get; set; }
         public string? Detail { get; set; }
         public DateTime? CreatedTime { get; set; }
+        public bool? Active { get; set; }
     }
 }

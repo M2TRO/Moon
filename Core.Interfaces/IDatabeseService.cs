@@ -30,6 +30,7 @@ namespace Core.Interfaces
         List<TransBank> GetTransBankbyAccRef(string AccRef);
         List<TransBank> GetTransBankbyId(int tid);
         Task<int> AddLogSlip(LogSlip logSlip);
+        int AddlogSlipSync(LogSlip logSlip);
         Task<int> AddTransBankstSync(TransBank transBank);
         Task<int> UpdateTransBankstSync(TransBank transBank);
          List<MtBank> GetMTBanks();
@@ -37,7 +38,10 @@ namespace Core.Interfaces
 
         List<Transaction> GetTransection(MdlGetBank BankId);
 
-         Task<int> AddLogsMsgsms(LogsMsgsm logsMsgsm);
+        int AddLogsMsgsms(LogsMsgsm logsMsgsm);
+        int UpdateActiveLogs(LogsMsgsm logsMsgsm);
         List<LogsMsgsm> GetLogsMsgsms();
+        int AddTransVer(TransVer transVer);
+        List<TransVer> GetTransVers();
     }
 }

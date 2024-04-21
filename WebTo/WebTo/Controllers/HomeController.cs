@@ -33,6 +33,10 @@ namespace WebTo.Controllers
             return View();
         }
 
+        public IActionResult Main()
+        {
+            return View();
+        }
 
 
 
@@ -47,6 +51,64 @@ namespace WebTo.Controllers
             return View();
         }
 
+        public IActionResult Upload()
+        {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Index");
+            }
+            ResCustInfo response = new ResCustInfo();
+            var mtres = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Auth/GetMTBanks", null, null);
+          
+            response.mtBanks = JsonConvert.DeserializeObject<List<MtBank>>(mtres.ToString());
+
+            return View(response);
+        }
+
+
+ 
+        public IActionResult Signout()
+        {
+
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Upload(SingleFileModel singleFileModel)
+        {
+
+
+            return View();
+        }
+
+        public IActionResult Transaction()
+        {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Index");
+            }
+            ResCustInfo response = new ResCustInfo();
+            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetTransVer", null, null);
+            response.vers = JsonConvert.DeserializeObject<List<TransVer>>(res.ToString());
+            response.vers.ForEach(m => {
+                m.StateName = m.State == true ? "Accept" : "Reject";
+            });
+
+            return View(response);
+        }
+
+        [HttpPost]
+        public JsonResult Savetransaction([FromBody]MdlSaveTran mdlPayInput)
+        {
+            mdlPayInput.Bankcode = "";
+            var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Trans/Savetransaction", mdlPayInput, null);
+            SaveRes response = JsonConvert.DeserializeObject< SaveRes > (res.ToString());
+            return Json(response);
+        }
 
         public IActionResult Monitor(string id)
         {
@@ -56,14 +118,17 @@ namespace WebTo.Controllers
             {
                 return RedirectToAction("Index");
             }
+            //MdlAccount mdlAccount = new MdlAccount() { AccTel = "0917982183", AccPwd = "admin" };
+
+            //var res =   _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Auth/Login", mdlAccount, null);
+            //MdlResponse response = JsonConvert.DeserializeObject<MdlResponse>(res.ToString());
+            var res1 = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, null);
 
 
-            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, token);
-
-
-            List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
-            checkdate = response.Count;
-            return View(response);
+            List<LogsMsgsm> response1 = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res1.ToString());
+            if(response1.Count != 0)
+            checkdate = response1.FirstOrDefault().CreatedTime;
+            return View(response1);
         
         }
 
@@ -91,13 +156,15 @@ namespace WebTo.Controllers
             }
 
             var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Auth/Login", auth, null);
-            if(res != null)
+
+            _logger.Log(LogLevel.Information, _URLAPI.WarpPortalAPI + "api/Auth/Login");
+            if (res != null)
             {
                 MdlResponse response = JsonConvert.DeserializeObject<MdlResponse>(res.ToString());
                 if (response.IsSuccess)
                 {
                     HttpContext.Session.SetString("Token", response.Token);
-                    return RedirectToAction("Member");
+                    return RedirectToAction("Monitor");
                 }
                 else
                 {
@@ -193,39 +260,63 @@ namespace WebTo.Controllers
             //}
             transBank.Token = token;
             var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Auth/SaveBank", transBank, token);
+
+
+
             return Json(res);
 
            
         }
 
-        public static int? checkdate  =0;
+       
+
+        public static DateTime? checkdate  = DateTime.Now;
         [HttpGet]
         public JsonResult RealtimeLogSms()
         {
 
-            var token = HttpContext.Session.GetString("Token");
+        //   var token = HttpContext.Session.GetString("Token");
             //if (string.IsNullOrEmpty(token))
             //{
             //    return RedirectToAction("index");
             //}
 
-        
-            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, token);
+
+            //MdlAccount mdlAccount = new MdlAccount() { AccTel = "0917982183", AccPwd = "admin" };
+
+            //var res1 = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Auth/Login", mdlAccount, null);
+            //MdlResponse response1 = JsonConvert.DeserializeObject<MdlResponse>(res1.ToString());
 
 
-            List<LogsMsgsm> response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString());
-
-            if(checkdate != response.Count)
+            var res = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetLogsMsgsms", null, null);
+            if (res != null)
             {
-                checkdate = response.Count;
+
+              LogsMsgsm response = JsonConvert.DeserializeObject<List<LogsMsgsm>>(res.ToString()).FirstOrDefault();
+                if (response != null)
+                {
+                    if (checkdate != response.CreatedTime)
+                    {
+                        checkdate = response.CreatedTime;
 
 
-                return Json(response.FirstOrDefault()) ;
+
+                        return Json(response);
+                    }
+                    else
+                    {
+                        return Json(null);
+
+                    }
+                }
+                else
+                {
+                    return Json(null);
+                }
             }
             else
             {
                 return Json(null);
-
             }
 
 
@@ -273,12 +364,26 @@ namespace WebTo.Controllers
            
         }
 
+
+       
+
         [HttpPost]
         public JsonResult verifyslip(SingleFileModel formData)
         {
+            MdlAccount auth = new MdlAccount() { AccTel = "0917982183", AccPwd ="admin" };
+
+            var res1 = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Auth/Login", auth, null);
+
+            MdlResponse response = JsonConvert.DeserializeObject<MdlResponse>(res1.ToString());
+
+         //   formData.AccInput = "admin";
             var token = HttpContext.Session.GetString("Token");
-            MdlGenVer genVer = new MdlGenVer() { AccInput = formData.AccInput, BankCode = formData.BankCode, Amount = formData.Amount };
-            var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Trans/GenerateTokenVer", genVer, token);
+
+        
+
+            MdlGenVer genVer = new MdlGenVer() { OrderId = formData.OrderId, Amount = formData.Amount};
+            var res = _AppInterfaceService.RestApiController(RestApiType.Post, _URLAPI.WarpPortalAPI + "api/Trans/GenerateTokenVer", genVer, response.Token);
+
             var resc = JsonConvert.DeserializeObject<MdlResponse>(res.ToString());
             if(resc.IsSuccess)
             {
@@ -297,9 +402,9 @@ namespace WebTo.Controllers
                 MemoryStream postDataStream = new MemoryStream();
                 StreamWriter postDataWriter = new StreamWriter(postDataStream);
 
-                postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
-                postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
-               "AccInput", genVer.AccInput);
+               // postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
+               // postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
+               //"AccInput", genVer.AccInput);
 
                 postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
                 postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
@@ -307,10 +412,12 @@ namespace WebTo.Controllers
                 postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
                 postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
 "CreatedTime", DateTime.Now.ToString());
+//                postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
+//                postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
+//"BankCode", formData.BankCode);
                 postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
                 postDataWriter.Write("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}",
-"BankCode", formData.BankCode);
-
+"OrderId", formData.OrderId);
 
                 postDataWriter.Write("\r\n--" + boundaryString + "\r\n");
                 postDataWriter.Write("Content-Disposition: form-data;"
@@ -351,7 +458,7 @@ namespace WebTo.Controllers
                     strjson = streamReader.ReadToEnd();
                 }
                 ResultUpload resultUpload = JsonConvert.DeserializeObject<ResultUpload>(strjson);
-                return Json(resultUpload);
+                    return Json(resultUpload);
             }
 
             MdlResponse mdlResponse = new MdlResponse();

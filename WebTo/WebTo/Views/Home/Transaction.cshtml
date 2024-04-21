@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Transaction";
+    Layout = "~/Views/Shared/_Layoutmain.cshtml";
+}
+@model ResCustInfo
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                OrderId
+            </th>
+            <th>
+                VerId
+            </th>
+            <th>
+                BankCode
+            </th>
+            <th>
+                Amout
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                CreatedTime
+            </th>
+       
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.vers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BankCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amout)
+                </td>
+                @if (item.State == true)
+                {
+                    <td style="color:green;">
+                        @Html.DisplayFor(modelItem => item.StateName)
+                    </td>
+                }
+                else
+                {
+                    <td style ="color:red;">
+                        @Html.DisplayFor(modelItem => item.StateName)
+                    </td>
+                }
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

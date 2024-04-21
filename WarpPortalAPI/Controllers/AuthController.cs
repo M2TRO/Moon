@@ -205,7 +205,7 @@ namespace WarpPortalAPI.Controllers
         }
 
         [HttpGet]
-        [Authz]
+      //  [Authz]
         public IActionResult GetMTBanks()
         {
             var bank = _databeseService.GetMTBanks();

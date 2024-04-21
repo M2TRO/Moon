@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "Upload";
+    Layout = "~/Views/Shared/_Layoutmain.cshtml";
+}
+
+
+<div class="banner">
+</div>
+
+               
+    <div class="showline">
+    <input id="OrderId" class="form-control" style="margin-bottom:6px" placeholder="Order ID" />
+@*         <select id="BankId" class="form-select" aria-label="Default select example">
+            @foreach (MtBank bank in Model.mtBanks)
+            {
+                <option value="@bank.Id">@bank.Code</option>
+            }
+        </select> *@
+   <br />
+        <input id="Amount" type="number" class="form-control" style="margin-bottom:6px" placeholder="Amount." />
+
+    </div>
+    <br />
+
+        <div class="input-group">
+        <input type="file" class="form-control" Id="File" name="File" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+       
+        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="SaveData('Verify')">Verify Slip</button>
+        </div>
+        <br/>
+   <div id="verslip"></div>
+
+
+
+<div class="form-group file-area">
+    <label for="images">Images <span>Your images should be at least 400x300 wide</span></label>
+    <input type="file" name="images" id="images" required="required" multiple="multiple" />
+    <div class="file-dummy">
+        <div class="success">Great, your files are selected. Keep on.</div>
+        <div class="default">Please select some files</div>
+    </div>
+</div>
+
+
+<script>
+
+    function SaveData(_mode) {
+        debugger;
+        switch (_mode) {
+           
+            case 'Verify':
+                debugger;
+                var OrderId = document.getElementById("OrderId").value;
+                var Amount = document.getElementById("Amount").value;
+           //     var PromNo = document.getElementById("PromNo").value;
+              //  var BankId = document.getElementById("BankId").value;
+            //    var BankCode = document.getElementById("BankCode").value;
+            //    var hid = document.getElementById("hdID").value;
+
+                var file = document.getElementById("File").files[0];
+                // var file_ext = filePath.substr(filePath.lastIndexOf('.') + 1, filePath.length);
+                let formData = new FormData();
+                formData.append("File", file);
+                // var genVer = {
+                 
+                //     BankCode: BankId,
+                //     Amount: Amount,
+
+                // };
+              //  formData.append("AccInput", PromNo);
+
+                formData.append("Amount", Amount);
+                formData.append("OrderId", OrderId);
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    method: 'POST',
+                    url: "@Url.Action("verifyslip", "Home")",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                               var divModalBody = $('#verslip');
+                               divModalBody.html(``);
+                        if(response.isSuccess != false)
+                        {
+               
+
+
+                        divModalBody.html(`<div class="output">
+                       
+                        <h3>`+response.isSuccess+`</h3>
+                                            <h3>AI : `+ response.verifyAI + `</h3>
+                                            <h3>SMS : `+ response.verify + `</h3>
+                                <h4>`+ response.bank+ `</h4>
+                                <a>Total. ` + response.amt + ` </a>
+                                            
+                            </div>`);
+                        }
+                        else
+                        {
+                            divModalBody.html(`<div class="output">
+                            <h2>`+ response.isSuccess + `</h2>
+                              <h2>`+ response.message + `</h2>
+
+                                </div>`);
+                        }
+                    
+                        debugger;
+                    },
+                    error: function (request, status, error) {
+                        
+                        alert(request.responseText);
+                    }
+                });
+
+                break;
+
+        }
+    }
+</script>
+

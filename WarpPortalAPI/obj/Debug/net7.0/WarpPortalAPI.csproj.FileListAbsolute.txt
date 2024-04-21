@@ -306,7 +306,6 @@ D:\Develop\GitCode\Moon\WarpPortalAPI\obj\Debug\net7.0\scopedcss\bundle\WarpPort
 D:\Develop\GitCode\Moon\WarpPortalAPI\obj\Debug\net7.0\WarpPort.2D284CFD.Up2Date
 D:\Develop\GitCode\Moon\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.genruntimeconfig.cache
 D:\Develop\GitCode\Moon\WarpPortalAPI\obj\Debug\net7.0\ref\WarpPortalAPI.dll
-D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.pdb
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.csproj.AssemblyReference.cache
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.GeneratedMSBuildEditorConfig.editorconfig
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.AssemblyInfoInputs.cache
@@ -315,7 +314,6 @@ D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.csproj.C
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.MvcApplicationPartsAssemblyInfo.cache
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.sourcelink.json
-D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.dll
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\bin\Debug\net7.0\appsettings.Development.json
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\bin\Debug\net7.0\appsettings.json
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\bin\Debug\net7.0\WarpPortalAPI.staticwebassets.runtime.json
@@ -382,6 +380,8 @@ D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\staticwebassets\msbuil
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\staticwebassets.pack.json
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\scopedcss\bundle\WarpPortalAPI.styles.css
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPort.2D284CFD.Up2Date
+D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.dll
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\refint\WarpPortalAPI.dll
+D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.pdb
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\WarpPortalAPI.genruntimeconfig.cache
 D:\Develop\GitCode\MoonDev\WarpPortalAPI\obj\Debug\net7.0\ref\WarpPortalAPI.dll

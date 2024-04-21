@@ -1,39 +1,90 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+      
 *@
 @{
+    Layout = "~/Views/Shared/_Layoutmain.cshtml";
 }
 @model List<LogsMsgsm>
 <div class="container">
-
+    <h4 class="datax">0</h4>
     <div class="dynamicpop">
+       
         @foreach (var item in Model)
         {
             <div class="blockshow">
                 <div class="blockshow-item">
-              
-                <h4>@item.Sender</h4>
-                <h6>@item.CreatedTime</h6>
+                    <div class="show">
+                <label>@item.Sender</label>
+                <br />
+                        <h7>@item.Id</h7>
+                   </div>
+                <label>@item.CreatedTime</label>
                  
                 </div>
+          
                 <div class="blockshow-item">
-                <h4>@item.Msg</h4>
+                 <h7>@item.Msg</h7>
              
                 </div>
+                <div class="blockshow-item">
+
+                    <button class="btn-danger" onclick="GetEditModal('TopUp','@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item)).ToString().Replace("\"", "dbq")')" data-bs-toggle="modal" data-bs-target="#myModal" value="TopUp"><a>Action</a></button>
+
+                </div>
+   
             </div>
         }
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div id="modalbody" class="modal-body">
+                @*                 <input id="AccountRef" hidden disabled class="form-control" value="@Model.tblAccount.AccRef"/>
+                <input id="PromNo" type="number" class="form-control" style="margin-bottom:6px" placeholder="Promptpay No." />
+                <input id="BankCode" class="form-control" placeholder="BankCode." /> *@
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnRejectConfig" type="button" class="btn btn-danger">Reject</button>
+                <button id="btnSaveConfig" type="button" class="btn btn-primary">Accept</button>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <script>
 
    var myvar = setInterval(mytime,4000)
-
+    var count = 0;
     function mytime(){
     
-       // alert('check');
+       //alert('check');
         var popup = $(".dynamicpop")
-    //    popup.html('');
-        debugger;
+
+        var popupdatax = $(".datax")
+        popupdatax.html('');
+        count++;
+        popupdatax.html(count);
+     //   debugger;
         $.ajax({
             type: "GET",
             url: "@Url.Action("RealtimeLogSms", "Home")",
@@ -42,15 +93,28 @@
             success: function (data) {
                 if (data != null) {
 
+                  
+                    debugger;
+
                     $(popup).prepend(`<div class="blockshow">
                                      <div class="blockshow-item">
-
-                                        <h5>`+ data.sender + `</h5>
-                                                                <h6>`+ data.createdTime + `</h6>
+                                              <div class="show">
+                                                <label>`+ data.sender + `</label>
+                                                 </div>
+                                                 <label>`+ data.createdTime + `</label>
                         </div>
                         <div class="blockshow-item">
-                                        <h4>`+ data.msg + `</h4>
+                                        <h7>`+ data.msg + `</h7>
                         </div>
+                               <div class="blockshow-item">
+
+
+                    </div>
+                    <div class="blockshow-item">
+
+
+
+                    </div>
                                 </div>`);
 
                 // $.each(data, function (index, value) {
@@ -67,9 +131,238 @@
                 // });
                 }
                 // alert('check');
-                debugger;
+        //        debugger;
             }
             });
     }
 
+    function GetEditModal(_mode, _value) {
+        debugger;
+        var _model;
+        var modal = document.getElementById("myModal");
+        // var span = document.getElementsByClassName("close")[0];
+
+
+        var divModalBody = $('#modalbody');
+
+        var btnSaveConfig = $('#btnSaveConfig');
+
+        var btnRejectConfig = $('#btnRejectConfig');
+
+        btnRejectConfig.attr("onclick", "SaveData('Reject')");
+
+        btnSaveConfig.attr("onclick", "SaveData('" + _mode + "')");
+        btnSaveConfig.prop('disabled', true);
+        var str = _value.replace(/dbq/g, '"');
+        str = str.replace(/(?:\r\n|\r|\n)/g, ' ');
+
+        if (_value != '') {
+
+            _model = JSON.parse(str);
+
+          //  _model = JSON.parse('{"Id":1056,"Code":"36c334f4c6053df1","Sender":"Krungthai","Msg":"15-04@21:49 ??X95811X:???????? 5.00? ?????? 115.10?","Amout":null,"CreatedTime":"2024-04-16T09:39:42.393","Lastupdate":null,"Active":null}');
+        }
+
+
+        divModalBody.html('');
+
+
+        switch (_mode) {
+
+            case 'AddBank':
+
+                break;
+            case 'TopUp':
+       
+                html = `
+                                <input id="hdID" hidden disabled class="form-control" value="`+ _model.Id + `""/>
+
+
+                                <input disabled id="LogId"  class="form-control" style="margin-bottom:6px" value="`+ _model.Id + `"  />
+                                        <input  id="OrderId"   class="form-control" style="margin-bottom:6px" placeholder="Order Id." required />
+                                        <input id="Amount" type="number"  class="form-control" style="margin-bottom:6px" placeholder="Amount." required />
+                                       <br/>
+                                           <div class="input-group">
+                                <input type="file" class="form-control" Id="File" name = "File"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                  
+                                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick = "SaveData('Verify')"  >Verify Slip</button>
+                                </div>
+
+                            
+                           
+                                <div id="verslip"></div>
+                                `;
+
+                divModalBody.html(html);
+                break;
+            case 'trans':
+
+
+
+                break;
+
+        }
+
+    }
+
+
+    function SaveData(_mode) {
+
+        switch (_mode) {
+            case 'AddBank':
+
+
+
+                break;
+            case 'TopUp':
+                debugger;
+                //var AccRef = document.getElementById("AccountRef").value;
+                var Amount = document.getElementById("Amount").value;
+                var OrderId = document.getElementById("OrderId").value;
+                var LogId = document.getElementById("LogId").value;
+
+                var stateres = document.getElementById("stateres").value;
+                var bankcode = document.getElementById("bankcode").value;
+                var mdlPayInput = {
+                    OrderId: OrderId,
+                    Amount: Amount,
+                    LogId: LogId,
+                    Bankcode: bankcode,
+                    state: true
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Savetransaction", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(mdlPayInput),
+                    dataType: "json",
+                    success: function (response) {
+
+                        if (response.isSuccess == true) {
+                            debugger;
+                            window.location.reload(true)
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                break;
+            case 'Reject':
+           
+                //var AccRef = document.getElementById("AccountRef").value;
+                var Amount = document.getElementById("Amount").value;
+                var OrderId = document.getElementById("OrderId").value;
+                var LogId = document.getElementById("LogId").value;
+                debugger;
+                // if (OrderId == '') {
+                //     alert("OrderId required!!");
+                //     return false;
+                // }
+                var mdlPayInput = {
+                    OrderId: OrderId,
+                    Amount: Amount,
+                    LogId: LogId,
+                    Bankcode: bankcode,
+                    state: false
+                };
+             
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Savetransaction", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(mdlPayInput),
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.isSuccess == true) {
+                            debugger;
+                            window.location.reload(true)
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                break;
+            case 'Verify':
+           
+                var btnSaveConfig = $('#btnSaveConfig');
+                var OrderId = document.getElementById("OrderId").value;
+                var Amount = document.getElementById("Amount").value;
+                var LogId = document.getElementById("LogId").value;
+
+
+                var file = document.getElementById("File").files[0];
+
+
+                if (OrderId == '' || Amount == '' || file == null) {
+                    alert("OrderId or Amount or file  required!!");
+             
+                    return false;
+                }
+                // var file_ext = filePath.substr(filePath.lastIndexOf('.') + 1, filePath.length);
+                let formData = new FormData();
+                formData.append("File", file);
+                // var genVer = {
+                //     AccInput: OrderId,
+                //     hid: hid,
+                //     Amount: Amount,
+
+                // };
+                formData.append("OrderId", OrderId);
+                formData.append("Amount", Amount);
+                formData.append("LogId", LogId);
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    method: 'POST',
+                    url: "@Url.Action("verifyslip", "Home")",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        var divModalBody = $('#verslip');
+                        divModalBody.html(``);
+
+                        if (response.isSuccess != false) {
+
+                            btnSaveConfig.prop('disabled', false);
+
+                            divModalBody.html(`<div class="output">
+                                 <input id="stateres" hidden disabled class="form-control" value="`+ response.isSuccess + `""/>
+                            <h3>`+ response.isSuccess + `</h3>
+                                                <h3>AI : `+ response.verifyAI + `</h3>
+                                                <h3>Ver : `+ response.verify + `</h3>
+                                    <h4>`+ response.bank + `</h4>
+                                            <input id="bankcode" hidden disabled class="form-control" value="`+ response.bank + `""/>
+                                    <a>Total. ` + response.amt + ` </a>
+                                     
+
+                                </div>`);
+                        }
+                        else {
+                            divModalBody.html(`<div class="output">
+                                <input id="stateres" hidden disabled class="form-control" value="`+ response.isSuccess + `""/>
+                                <h2>`+ response.isSuccess + `</h2>
+                                      <h2>`+ response.message + `</h2>
+
+                                    </div>`);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+                break;
+
+        }
+    }
+
 </script>
+
+
+

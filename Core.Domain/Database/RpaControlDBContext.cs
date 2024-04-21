@@ -7,7 +7,7 @@ namespace Core.Domain.Database
 {
     public partial class RpaControlDBContext : DbContext
     {
- 
+  
 
         public RpaControlDBContext(DbContextOptions<RpaControlDBContext> options)
             : base(options)
@@ -23,6 +23,7 @@ namespace Core.Domain.Database
         public virtual DbSet<TblAccount> TblAccounts { get; set; } = null!;
         public virtual DbSet<TblScheduler> TblSchedulers { get; set; } = null!;
         public virtual DbSet<TransBank> TransBanks { get; set; } = null!;
+        public virtual DbSet<TransVer> TransVers { get; set; } = null!;
         public virtual DbSet<Transaction> Transactions { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,23 +31,27 @@ namespace Core.Domain.Database
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=10.144.41.54;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
+                optionsBuilder.UseSqlServer("Server=192.168.1.78;Database=RpaControlDB;User ID=sa;Password=Admin1234!");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("Thai_100_CI_AI");
+
             modelBuilder.Entity<Application>(entity =>
             {
                 entity.ToTable("Application");
 
                 entity.Property(e => e.AccRef)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
@@ -54,15 +59,18 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             });
 
             modelBuilder.Entity<LogEvent>(entity =>
@@ -71,11 +79,13 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Addr)
                     .HasMaxLength(20)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Code)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
@@ -83,24 +93,26 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Detail)
                     .HasMaxLength(1000)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Remark)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             });
 
             modelBuilder.Entity<LogSlip>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("LogSlip");
 
                 entity.Property(e => e.AccInput)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Amt).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Amt)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Bank)
                     .HasMaxLength(50)
@@ -114,9 +126,11 @@ namespace Core.Domain.Database
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Message)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OrId)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -127,11 +141,14 @@ namespace Core.Domain.Database
 
             modelBuilder.Entity<LogsMsgsm>(entity =>
             {
+                entity.Property(e => e.Active).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Amout).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.Code)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
@@ -139,17 +156,20 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Detail)
                     .HasMaxLength(500)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Msg)
                     .HasMaxLength(500)
                     .IsUnicode(false)
-                    .HasColumnName("msg");
+                    .HasColumnName("msg")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Sender)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("sender");
+                    .HasColumnName("sender")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             });
 
             modelBuilder.Entity<MtBank>(entity =>
@@ -160,7 +180,8 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Code)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
@@ -169,12 +190,14 @@ namespace Core.Domain.Database
                 entity.Property(e => e.DescEn)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("DescEN");
+                    .HasColumnName("DescEN")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.DescTh)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("DescTH");
+                    .HasColumnName("DescTH")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
@@ -186,7 +209,8 @@ namespace Core.Domain.Database
                 entity.Property(e => e.DescEn)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("DescEN");
+                    .HasColumnName("DescEN")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             });
 
             modelBuilder.Entity<TblAccount>(entity =>
@@ -197,23 +221,28 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.AccTel)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.AccEmail)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.AccName)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.AccPwd)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.AccRef)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
@@ -234,7 +263,8 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.CreatedTime)
                     .HasColumnType("datetime")
@@ -242,21 +272,25 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.Hashtag)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.ModifyBy)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.ModifyTime).HasColumnType("datetime");
 
                 entity.Property(e => e.RefNo)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.TitelName)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             });
 
             modelBuilder.Entity<TransBank>(entity =>
@@ -268,11 +302,13 @@ namespace Core.Domain.Database
 
                 entity.Property(e => e.PromNo)
                     .HasMaxLength(15)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.AccRef)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                 entity.Property(e => e.Active).HasDefaultValueSql("((1))");
 
@@ -285,7 +321,35 @@ namespace Core.Domain.Database
                 entity.Property(e => e.Token)
                     .HasMaxLength(500)
                     .IsUnicode(false)
-                    .HasColumnName("token");
+                    .HasColumnName("token")
+                    .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            });
+
+            modelBuilder.Entity<TransVer>(entity =>
+            {
+                entity.ToTable("TransVer");
+
+                entity.Property(e => e.AccountRef)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amout)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BankCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedTime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.State).HasColumnName("state");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
@@ -302,7 +366,15 @@ namespace Core.Domain.Database
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.DateTimeSlip).HasColumnType("datetime");
+
                 entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Sender)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Total).HasColumnType("decimal(10, 2)");
             });
 
             OnModelCreatingPartial(modelBuilder);

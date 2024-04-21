@@ -53,16 +53,132 @@ namespace WarpPortalAPI.Controllers
             return Ok(data);
         }
 
+
+        [HttpPost]
+        public ActionResult Savetransaction(MdlSaveTran mdlSaveTran)
+        {
+
+            TransVer transVer = new TransVer();
+            transVer.LogId = Convert.ToInt32(mdlSaveTran.LogId);
+           // transVer.OrderId = mdlSaveTran.OrderId;
+            transVer.Amout = mdlSaveTran.Amount;
+            transVer.State = mdlSaveTran.state;
+            transVer.BankCode = mdlSaveTran.Bankcode;
+            var res=  _databeseService.AddTransVer(transVer);
+
+            SaveRes saveRes = new SaveRes();
+            saveRes.IsSuccess = true;
+          
+            return Ok(saveRes);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult GetTransVer()
+        {
+            var data = _databeseService.GetTransVers();
+
+
+            return Ok(data);
+        }
+
+
         [HttpPost]
         public ActionResult VerifyData(MdlData data)
         {
 
             LogsMsgsm logEvent = new LogsMsgsm();
-            logEvent.Code = "99";
+            logEvent.Code = data.Code;
             logEvent.Sender = data.sender;
             logEvent.Detail = JsonConvert.SerializeObject(data);
+            logEvent.Msg = data.msg;
+            int LogId = _databeseService.AddLogsMsgsms(logEvent);
+       
 
-            _databeseService.AddLogsMsgsms(logEvent);
+            switch(data.sender)
+            {
+                case "Krungthai":
+
+                    Transaction transaction = new Transaction();
+                    transaction.LogId = LogId;
+                    if (data.msg.Contains("เงินเข้า"))
+                    {
+                        transaction.AccRef = data.Code;
+                        transaction.Sender = data.sender;
+               
+                        transaction.TransTypeId = 1;
+                        transaction.TransBankId = 6;
+                        string Amout = data.msg.Split(' ')[2].ToString().Replace("บ","");
+                        string Total = data.msg.Split(' ')[4].ToString().Replace("บ", "");
+                        
+                        string date = data.msg.Split(' ')[0].ToString();
+                        string datefor = date.Replace("@", " ");
+
+
+                        int day = Convert.ToInt32(datefor.Substring(0,2));
+                        int month = Convert.ToInt32(datefor.Substring(3, 2));
+
+                        int h = Convert.ToInt32(datefor.Substring(6, 2));
+                        int m = Convert.ToInt32(datefor.Substring(9, 2));
+
+                        DateTime dateTime = new DateTime(DateTime.Now.Year,month,day,h,m,0);
+                        transaction.DateTimeSlip = dateTime;
+                        try
+                        {
+                            transaction.Amout = Convert.ToDecimal(Amout);
+                        }
+                        catch (Exception ex){ }
+                        try
+                        {
+                            transaction.Total = Convert.ToDecimal(Total);
+                        }
+                        catch (Exception ex) { }
+
+                       
+                    }
+                    else
+                    {
+
+                        transaction.AccRef = data.Code;
+                        transaction.Sender = data.sender;
+                        transaction.TransTypeId = 2;
+                        transaction.TransBankId = 6;
+                        string Amout = data.msg.Split(' ')[2].ToString().Replace("บ", "");
+                        string Total = data.msg.Split(' ')[4].ToString().Replace("บ", "");
+                        string date = data.msg.Split(' ')[0].ToString();
+                        string datefor = date.Replace("@", " ");
+
+
+                        int day = Convert.ToInt32(datefor.Substring(0, 2));
+                        int month = Convert.ToInt32(datefor.Substring(3, 2));
+
+                        int h = Convert.ToInt32(datefor.Substring(6, 2));
+                        int m = Convert.ToInt32(datefor.Substring(9, 2));
+
+                        DateTime dateTime = new DateTime(DateTime.Now.Year, month, day, h, m, 0);
+                        transaction.DateTimeSlip = dateTime;
+                        try
+                        {
+                            transaction.Amout = Convert.ToDecimal(Amout);
+                        }
+                        catch (Exception ex) { }
+                        try
+                        {
+                            transaction.Total = Convert.ToDecimal(Total);
+                        }
+                        catch (Exception ex) { }
+
+
+                    }
+                    _databeseService.AddTransactions(transaction);
+
+                    break;
+                
+            }
+
+
+
             return Ok();
         }
 
@@ -82,30 +198,53 @@ namespace WarpPortalAPI.Controllers
                 singleFileModel.File = data.Files[0];
 
 
-                if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["AccInput"]))
+                if (data.Keys.Count > 0 && !string.IsNullOrEmpty(data["Amount"]) && !string.IsNullOrEmpty(data["OrderId"]))
                 {
 
 
 
                     verify.Amount = data["Amount"];
-                    verify.BankCode = data["BankCode"];
+                    verify.OrderId = data["OrderId"];
+                  
                     singleFileModel.File = singleFileModel.File;
                     LogEvent logEvent = new LogEvent() { Code = "10", Remark = "Verifyslip", Detail = JsonConvert.SerializeObject(singleFileModel), Addr = context.Connection.RemoteIpAddress.ToString() };
                     _databeseService.AddlogEventSync(logEvent);
                     try
                     {
+
+                        var banktolist =   _databeseService.GetTransection(null).OrderByDescending(m=>m.CeatedDate).ToList();
+
                         ResultUpload mdlDataRes = _toolsService.Upload(singleFileModel);
                         if (mdlDataRes.IsSuccess)
                         {
+
+
+
+                            switch(mdlDataRes.BankName)
+                            {
+                                case "BBL":
+                                    mdlDataRes.Amt = mdlDataRes.Amt.Replace("THB", "");
+                                    break;
+                                case "KTB":
+                                    mdlDataRes.Amt = mdlDataRes.Amt.Replace("บาท", "");
+                                    break;
+                                case "BAY":
+                                    mdlDataRes.Amt = mdlDataRes.Amt.Replace("THB", "");
+                                    break;
+                            }
+
+                        
+
                             LogSlip logSlip = new LogSlip();
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
-                            logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
-                            logSlip.AccInput = verify.AccInput;
+                            logSlip.Amt = mdlDataRes.Amt;
+                          //  logSlip.AccInput = verify.AccInput;
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
-                            var res = _databeseService.AddLogSlip(logSlip);
+                            logSlip.OrId = verify.OrderId;
+                             var res = _databeseService.AddlogSlipSync(logSlip);
                             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDB");
 
                             //create folder if not exist
@@ -123,16 +262,55 @@ namespace WarpPortalAPI.Controllers
                                 singleFileModel.File.CopyTo(stream);
                             }
 
+                            decimal a = Convert.ToDecimal(mdlDataRes.Amt);
                             ResVerSlip resVerSlip = new ResVerSlip();
+
+                           var datalist =   banktolist.Where(m => (m.Amout == a && m.DateTimeSlip > DateTime.Now.AddMinutes(-30))).FirstOrDefault();
+                            if (datalist != null)
+                            {
+                                resVerSlip.Verify = true;
+                            }
+                            //banktolist.ForEach(m => {
+                            //    if (m.Amout == a)
+                            //    {
+                            //        resVerSlip.Verify = true;
+                            //    }
+
+                            //});
+
+
+
                             resVerSlip.Amt = mdlDataRes.Amt;
                             resVerSlip.Datetime = mdlDataRes.Datetime;
                             resVerSlip.Bank = mdlDataRes.BankName;
                             resVerSlip.CreatedTime = DateTime.Now;
-                            resVerSlip.IsSuccess = true;
-                            resVerSlip.Message = "Verify Is OK!";
-                            logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(resVerSlip) };
-                            _databeseService.AddlogEventSync(logEvent);
-                            return Ok(resVerSlip);
+                          
+                            resVerSlip.VerifyAI = true;
+                       
+                        
+                       
+
+
+                            if (Convert.ToDouble(mdlDataRes.Amt) != Convert.ToDouble(verify.Amount))
+                            {
+                                resVerSlip.IsSuccess = false;
+                                resVerSlip.Message = "Amount Mismatch!!";
+                                logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(resVerSlip) };
+                                _databeseService.AddlogEventSync(logEvent);
+                                return Ok(resVerSlip);
+                            }
+                            else
+                            {
+                                resVerSlip.IsSuccess = true;
+                                resVerSlip.Message = "Verify Is OK!";
+                                logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(resVerSlip) };
+                                _databeseService.AddlogEventSync(logEvent);
+                                return Ok(resVerSlip);
+                            }
+
+
+
+                          
                         }
                         else
                         {
@@ -141,11 +319,12 @@ namespace WarpPortalAPI.Controllers
 
                             logSlip.Ref = mdlDataRes.Ref;
                             logSlip.Datetime = mdlDataRes.Datetime;
-                            logSlip.Amt = Convert.ToDecimal(mdlDataRes.Amt);
+                            logSlip.Amt = mdlDataRes.Amt;
                             logSlip.Bank = mdlDataRes.BankName;
                             logSlip.Message = mdlDataRes.Message;
                             logSlip.IsSuccess = mdlDataRes.IsSuccess;
-                            //     var res = _dbLogService.SaveLogSlip(logSlip);
+                            logSlip.OrId = verify.OrderId;
+                              var res = _databeseService.AddlogSlipSync(logSlip);
                             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SlipDBError");
 
                             logEvent = new LogEvent() { Code = "10", Remark = "ResVerifyslip", Detail = JsonConvert.SerializeObject(logSlip) };
@@ -167,7 +346,7 @@ namespace WarpPortalAPI.Controllers
                             }
 
 
-                            return BadRequest(mdlDataRes);
+                            return Ok(mdlDataRes);
                         }
                     }
                     catch (Exception ex)
@@ -176,7 +355,7 @@ namespace WarpPortalAPI.Controllers
                         resVerSlip.CreatedTime = DateTime.Now;
                         resVerSlip.IsSuccess = false;
                         resVerSlip.Message = ex.Message;//"Verify Error!.OCR catch";
-                        return BadRequest(resVerSlip);
+                        return Ok(resVerSlip);
                     }
 
                 }
@@ -186,7 +365,7 @@ namespace WarpPortalAPI.Controllers
                     resVerSlip.CreatedTime = DateTime.Now;
                     resVerSlip.IsSuccess = false;
                     resVerSlip.Message = "Verify Error!.Check Input Key.";
-                    return BadRequest(resVerSlip);
+                    return Ok(resVerSlip);
                 }
 
 
@@ -198,7 +377,7 @@ namespace WarpPortalAPI.Controllers
                 resVerSlip.CreatedTime = DateTime.Now;
                 resVerSlip.IsSuccess = false;
                 resVerSlip.Message = "Verify Error!!";
-                return BadRequest(resVerSlip);
+                return Ok(resVerSlip);
             }
 
 

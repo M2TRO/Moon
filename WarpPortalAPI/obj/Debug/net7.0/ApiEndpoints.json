@@ -147,6 +147,32 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "GetTransVer",
+    "RelativePath": "api/Trans/GetTransVer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "Savetransaction",
+    "RelativePath": "api/Trans/Savetransaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mdlSaveTran",
+        "Type": "Core.Models.MdlSaveTran",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "Transaction",
     "RelativePath": "api/Trans/Transaction",
     "HttpMethod": "POST",

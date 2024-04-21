@@ -5,13 +5,18 @@
 @model MdlAccount
 
 
-<div class="container-fluid">
+<div class="container">
+    
+    <div class="container">
+     <div class="banner"></div>
+
+    </div>
     <div id="tag1" class="block-cont">
     <div class="row">
         <div class="col-sm-12 text-center">
             <div style="display:inline-grid">
-                    <div class="maincentersub2">   <h2 class="display-4">.</h2></div>
-                <div  style="display:block;">
+                    <div class="maincentersub2">  </div>
+                <div  style="display:block; width: 20rem;">
                   
                    
                        @*  @using (Html.BeginForm()) *@
@@ -43,7 +48,7 @@
                        
                         <hr />
                         <div style="display:inline-flex">
-                            <button class="btn m-md-3 btn-outline-success btncustom btn-lg" onclick="location.href='@Url.Action("Register", "Home")'">Sign up</button>
+                            <button class="btn m-md-3 btn-outline-success btncustom btn-lg" onclick="location.href='@Url.Action("Register", "Home")'"wq>Sign up</button>
                         </div>
                 </div>
               @*    <div style="display:inline-flex">

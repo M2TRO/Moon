@@ -44,7 +44,14 @@ namespace WebTo.Models
         public string Token { get; set; }
     }
 
-    public  class LogsMsgsm
+    public class SaveRes : MdlResponse
+    {
+        public int Id { get; set; }
+
+    }
+
+
+    public class LogsMsgsm
     {
         public int Id { get; set; }
         public string? Code { get; set; }
@@ -53,17 +60,33 @@ namespace WebTo.Models
         public decimal? Amout { get; set; }
         public string? Detail { get; set; }
         public DateTime? CreatedTime { get; set; }
+
+        public DateTime? Lastupdate { get; set; }
+        public bool? Active { get; set; }
     }
     public class ResCustInfo: MdlResponse
     {
         public TblAccount tblAccount { get; set; }
         public List<TransBank> transBanks { get; set; }
 
-
+        public List<TransVer>  vers { get; set; }
 
         public List<MtBank> mtBanks { get; set; }   
 
 
+    }
+    public  class TransVer
+    {
+        public int Id { get; set; }
+        public int? LogId { get; set; }
+        public string? OrderId { get; set; }
+        public int? TransId { get; set; }
+        public string? BankCode { get; set; }
+        public string? Amout { get; set; }
+        public string? AccountRef { get; set; }
+        public bool? State { get; set; }
+        public string? StateName { get; set; }
+        public DateTime? CreatedTime { get; set; }
     }
 
     public partial class MtBank
@@ -134,13 +157,15 @@ namespace WebTo.Models
     {
 
         [Required(ErrorMessage = "Required AccInput")]
-        public string AccInput { get; set; }
+        public string OrderId { get; set; }
 
-        [Required(ErrorMessage = "Required BankCode")]
-        public string BankCode { get; set; }
+        //[Required(ErrorMessage = "Required BankCode")]
+        //public string BankCode { get; set; }
 
         [Required(ErrorMessage = "Required Amount")]
         public string Amount { get; set; }
+
+   
         public IFormFile File { get; set; }
     }
 
@@ -152,17 +177,33 @@ namespace WebTo.Models
         //   [Required(ErrorMessage = "Please select file")]
         public IFormFile File { get; set; }
 
-        public string AccInput { get; set; }
-        public string BankCode { get; set; }
+        //public string AccInput { get; set; }
+        //public string BankCode { get; set; }
         public string Amount { get; set; }
- 
+        public string OrderId { get; set; }
+        
+
+    }
+
+    public class MdlSaveTran
+    {
+
+        public string? Amount { get; set; }
+        public string? OrderId { get; set; }
+        public string? Bankcode { get; set; }
+        public string? LogId { get; set; }
+        public bool state {  get; set; }
+
+
     }
 
     public class ResultUpload : MdlResponse
     {
         public string Ref { get; set; }
-        public string BankName { get; set; }
+        public string Bank { get; set; }
         public string Amt { get; set; }
         public string Datetime { get; set; }
+        public bool VerifyAI { get; set; }
+        public bool Verify { get; set; }
     }
 }

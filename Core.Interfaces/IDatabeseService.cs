@@ -27,6 +27,7 @@ namespace Core.Interfaces
 
         Task<int> AddlogEvent(LogEvent logEvent);
         int AddlogEventSync(LogEvent logEvent);
+        List<LogEvent> GetLogEvents();
         List<TransBank> GetTransBankbyAccRef(string AccRef);
         List<TransBank> GetTransBankbyId(int tid);
         Task<int> AddLogSlip(LogSlip logSlip);

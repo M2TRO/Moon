@@ -183,7 +183,7 @@
                                         <input id="Amount" type="number"  class="form-control" style="margin-bottom:6px" placeholder="Amount." required />
                                        <br/>
                                            <div class="input-group">
-                                <input type="file" class="form-control" Id="File" name = "File"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                        <input type="file" class="form-control" Id="File" name = "File" onchange ="change(this)"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                   
                                     <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick = "SaveData('Verify')"  >Verify Slip</button>
                                 </div>
@@ -191,6 +191,7 @@
                             
                            
                                 <div id="verslip"></div>
+                                <img id="myimage" height="350">
                                 `;
 
                 divModalBody.html(html);
@@ -205,6 +206,25 @@
 
     }
 
+    function change(evt) {
+        var tgt = evt.target || window.event.srcElement,
+            files = tgt.files;
+
+        // FileReader support
+        if (FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('myimage').src = fr.result;
+            }
+            fr.readAsDataURL(files[0]);
+        }
+
+        // Not supported
+        else {
+            // fallback -- perhaps submit the input to an iframe and temporarily store
+            // them on the server until the user's session ends.
+        }
+    }
 
     function SaveData(_mode) {
 
@@ -361,6 +381,7 @@
 
         }
     }
+
 
 </script>
 

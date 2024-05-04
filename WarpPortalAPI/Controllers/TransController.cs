@@ -85,6 +85,25 @@ namespace WarpPortalAPI.Controllers
 
 
         [HttpPost]
+        public ActionResult Polling(MdlData data)
+        {
+            LogEvent logEvent = new LogEvent();
+            logEvent.Code = data.Code;
+            logEvent.Detail = JsonConvert.SerializeObject(data);
+            logEvent.Remark = data.sender;
+            _databeseService.AddlogEvent(logEvent);
+            return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult GetPolling()
+        {
+            var data = _databeseService.GetLogEvents();
+
+
+            return Ok(data);
+        }
+            [HttpPost]
         public ActionResult VerifyData(MdlData data)
         {
 

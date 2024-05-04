@@ -72,6 +72,7 @@ namespace WebTo.Models
         public List<TransVer>  vers { get; set; }
 
         public List<MtBank> mtBanks { get; set; }   
+        public List<LogEvent> logEvents { get; set; }
 
 
     }
@@ -88,7 +89,15 @@ namespace WebTo.Models
         public string? StateName { get; set; }
         public DateTime? CreatedTime { get; set; }
     }
-
+    public partial class LogEvent
+    {
+        public int Id { get; set; }
+        public string? Code { get; set; }
+        public string? Addr { get; set; }
+        public string? Detail { get; set; }
+        public string? Remark { get; set; }
+        public DateTime? CreatedTime { get; set; }
+    }
     public partial class MtBank
     {
         public int Id { get; set; }

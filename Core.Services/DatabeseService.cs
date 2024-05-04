@@ -87,6 +87,11 @@ namespace Core.Services
             return  _rpaControlDBContext.LogEvents.Add(logEvent).Context.SaveChanges();
         }
 
+        public List<LogEvent> GetLogEvents()
+        {
+            return _rpaControlDBContext.LogEvents.Where(e=>e.Remark == "polling").OrderByDescending(e=>e.CreatedTime).Take(15).ToList();
+        }
+
         public List<TransBank> GetTransBankbyId(int tid)
         {
             return _rpaControlDBContext.TransBanks.Where(m => m.Id == tid).ToList();

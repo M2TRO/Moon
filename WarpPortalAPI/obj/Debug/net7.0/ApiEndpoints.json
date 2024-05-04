@@ -131,6 +131,16 @@
   },
   {
     "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "GetPolling",
+    "RelativePath": "api/Trans/GetPolling",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
     "Method": "GetTransaction",
     "RelativePath": "api/Trans/GetTransaction",
     "HttpMethod": "POST",
@@ -153,6 +163,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarpPortalAPI.Controllers.TransController",
+    "Method": "Polling",
+    "RelativePath": "api/Trans/Polling",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Core.Models.MdlData",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -26,25 +26,38 @@
         <div class="input-group">
         <input type="file" class="form-control" Id="File" name="File" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
        
-        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onclick="SaveData('Verify')">Verify Slip</button>
+        <button class="btn btn-outline-secondary" style="background-color:yellow    " type="button" id="inputGroupFileAddon04" onclick="SaveData('Verify')">Verify Slip</button>
         </div>
         <br/>
    <div id="verslip"></div>
+<img id="myimage" height="500">
 
-
-
-<div class="form-group file-area">
-    <label for="images">Images <span>Your images should be at least 400x300 wide</span></label>
-    <input type="file" name="images" id="images" required="required" multiple="multiple" />
-    <div class="file-dummy">
-        <div class="success">Great, your files are selected. Keep on.</div>
-        <div class="default">Please select some files</div>
-    </div>
-</div>
+@* <div class="drop-zone">
+    <span class="drop-zone__prompt">Drop file here or click to upload</span>
+    <input type="file" name="myFile" class="drop-zone__input">
+</div> *@
 
 
 <script>
+    document.getElementById('File').onchange = function (evt) {
+        var tgt = evt.target || window.event.srcElement,
+            files = tgt.files;
 
+        // FileReader support
+        if (FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('myimage').src = fr.result;
+            }
+            fr.readAsDataURL(files[0]);
+        }
+
+        // Not supported
+        else {
+            // fallback -- perhaps submit the input to an iframe and temporarily store
+            // them on the server until the user's session ends.
+        }
+    }
     function SaveData(_mode) {
         debugger;
         switch (_mode) {

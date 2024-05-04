@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "StatusView";
+    Layout = "~/Views/Shared/_Layoutmain.cshtml";
+}
+@model ResCustInfo
+
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                Code
+            </th>
+            <th>
+                State.
+            </th>
+            <th>
+                LastSync.
+            </th>
+           
+        </tr>
+    </thead>
+      <tbody>
+            @foreach (var item in Model.logEvents)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                    </tr>
+            }
+                     </tbody>
+        </table>

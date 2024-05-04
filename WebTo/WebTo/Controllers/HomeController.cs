@@ -38,7 +38,23 @@ namespace WebTo.Controllers
             return View();
         }
 
+        public IActionResult StatusView()
+        {
+            ResCustInfo response = new ResCustInfo();
+            var polres = _AppInterfaceService.RestApiController(RestApiType.Get, _URLAPI.WarpPortalAPI + "api/Trans/GetPolling", null, null);
+            if (polres != null)
+            {
+                response.logEvents = JsonConvert.DeserializeObject<List<LogEvent>>(polres.ToString());
+                return View(response);
+            }
+            else
+            {
 
+                response.logEvents = new List<LogEvent>();
+                return View(response); 
+            
+            }
+        }
 
         [HttpPost]
         public IActionResult Index(MdlAccount auth)

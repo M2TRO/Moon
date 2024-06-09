@@ -1,0 +1,114 @@
+kubectl config get-contexts
+
+kubectl config use-context docker-desktop
+
+kubectl get nodes
+
+docker run -d -it --rm -p 8000:8080 --name aspnetcore_sample mcr.microsoft.com/dotnet/samples:aspnetapp
+
+
+docker run -d -it --rm -p 8005:8080 --name exdeplot deploytest:1.0.0
+
+build
+docker build -t deploy:1.0.1 .
+
+docker run -d -it --rm -p 9000:8080 --name deploy:1.0.1
+
+32769
+docker run -d -it --rm -p 8000:8080 --name dockercheck2:dev
+docker container ls -a
+
+
+container stop ce6f86e90f1b
+
+
+kubectl get pod --all-namespaces
+
+kubectl create namespace $USER-cli
+
+kubectl create namespace kubetest
+
+
+kubectl set image deployment nginx nginx=httpd:2.4-alpine
+
+
+
+kubectl create deployment apache --image=httpd:2.4-alpine
+
+
+kubectl get namespace
+
+kubectl config get-contexts
+
+
+kubectl config set-context $(kubectl config current-context) --namespace=kubetest
+
+kubectl create deployment nginx --image=nginx
+
+kubectl get deployment,pod
+
+get pod
+
+kubectl describe deployments nginx
+
+get pod
+kubectl describe pod nginx-7854ff8877-j7sd6
+
+
+kubectl expose deployment nginx --type LoadBalancer --port 80 --name nginx-lb
+
+//
+kubectl expose deployment nginx --type ClusterIP --port 80 --name nginx-cip
+
+
+//สำหรับทำสอบ deploy check loadbalancer
+kubectl port-forward service/nginx-cip 8080:80
+
+
+ kubectl scale deployment nginx --replicas=3
+
+
+
+kubectl set image deployment nginx nginx=deploytest:1.0.0
+
+
+kubectl set selector service nginx-cip 'app=apache'
+
+
+
+kubectl logs nginx-7854ff8877-gq4xd -f
+
+
+access apache
+
+kubectl exec -it apache-657cd888c-8ctjg -- sh
+
+
+kubectl delete deployment nginx apache
+kubectl delete service nginx-cip nginx-lb
+kubectl get deployment,pod,service
+kubectl delete namespace kubetest
+
+
+kubectl delete deployment nginx apache
+kubectl delete service nginx-cip nginx-lb
+kubectl get deployment,pod,service
+kubectl delete namespace kubetest
+
+kubectl delete namespace kubetest-manifest
+
+
+
+kubectl create namespace kubetest-manifest
+kubectl config set-context $(kubectl config current-context) --namespace=kubetest-manifest
+
+
+
+mkdir ~/k8s
+touch ~/k8s/01-pod.yaml
+
+kubectl apply -f 01-pod.yaml
+
+
+
+kubectl api-resources
